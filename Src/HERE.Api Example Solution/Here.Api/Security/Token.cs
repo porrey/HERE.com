@@ -20,52 +20,37 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+using Newtonsoft.Json;
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
-using Here.Api.Models;
+using System.ComponentModel;
 
 namespace Here.Api
 {
-	class Program
+	public class Token
 	{
-		static async Task Main(string[] args)
+		public Token()
 		{
-			//
-			// Find and address.
-			//
-			(GeoCodeList result, ApiError error) = await Api.CheckAddressAsync(new Address()
-			{
-				Street = "600 E. Grand Avenue",
-				City = "Chicago",
-				State = "IL"
-			});
+			this.CreatedDateTime = DateTime.Now;
+		}
 
-			if (error == null)
-			{
-				Console.WriteLine($"Result: {result.Items[0].Title}, {result.Items[0].Id}");
-			}
-			else
-			{
-				Console.WriteLine($"Error: {error.Title}");
-			}
+		[Description("A token you can use to authenticate REST requests.")]
+		[JsonProperty("access_token")]
+		public string AccessToken { get; set; }
 
-			//
-			// Get a sample map image.
-			//
-			byte[] imageData = await Api.GetSampleMapImageAsync();
+		[Description("The type of token issued by the Authentication and Authorization API. This value will always be 'bearer' since the API issues bearer tokens.")]
+		[JsonProperty("token_type")]
+		public string TokenType { get; set; }
 
-			//
-			// Save the image to a temporary file.
-			//
-			string tempFile = $"{Path.GetTempFileName()}.png";
-			await File.WriteAllBytesAsync(tempFile, imageData);
+		[Description("The number of seconds until the token expires. Tokens expire 24 hours after they are issued.")]
+		[JsonProperty("expires_in")]
+		public int ExpiresIn { get; set; }
 
-			//
-			// Open the image with the default system viewer.
-			//
-			Process.Start(new ProcessStartInfo(tempFile) { UseShellExecute = true });
+		public DateTime CreatedDateTime { get; protected set; }
+
+		public override string ToString()
+		{
+			DateTime expires = this.CreatedDateTime.AddSeconds(this.ExpiresIn);
+			return $"Expires on {expires.ToLongDateString()} at {expires.ToLongTimeString()}";
 		}
 	}
 }

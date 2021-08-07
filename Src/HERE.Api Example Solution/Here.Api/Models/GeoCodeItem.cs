@@ -20,52 +20,31 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
-using Here.Api.Models;
+using Newtonsoft.Json;
 
-namespace Here.Api
+namespace Here.Api.Models
 {
-	class Program
+	public class GeoCodeItem
 	{
-		static async Task Main(string[] args)
-		{
-			//
-			// Find and address.
-			//
-			(GeoCodeList result, ApiError error) = await Api.CheckAddressAsync(new Address()
-			{
-				Street = "600 E. Grand Avenue",
-				City = "Chicago",
-				State = "IL"
-			});
+		[JsonProperty("title")]
+		public string Title { get; set; }
 
-			if (error == null)
-			{
-				Console.WriteLine($"Result: {result.Items[0].Title}, {result.Items[0].Id}");
-			}
-			else
-			{
-				Console.WriteLine($"Error: {error.Title}");
-			}
+		[JsonProperty("id")]
+		public string Id { get; set; }
 
-			//
-			// Get a sample map image.
-			//
-			byte[] imageData = await Api.GetSampleMapImageAsync();
+		[JsonProperty("resultType")]
+		public string ResultType { get; set; }
 
-			//
-			// Save the image to a temporary file.
-			//
-			string tempFile = $"{Path.GetTempFileName()}.png";
-			await File.WriteAllBytesAsync(tempFile, imageData);
+		[JsonProperty("houseNumberType")]
+		public string HouseNumberType { get; set; }
 
-			//
-			// Open the image with the default system viewer.
-			//
-			Process.Start(new ProcessStartInfo(tempFile) { UseShellExecute = true });
-		}
+		[JsonProperty("address")]
+		public Address Address { get; set; }
+
+		[JsonProperty("position")]
+		public Position Position { get; set; }
+
+		[JsonProperty("access")]
+		public Position[] Access { get; set; }
 	}
 }
