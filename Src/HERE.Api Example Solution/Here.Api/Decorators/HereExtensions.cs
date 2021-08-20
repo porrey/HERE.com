@@ -29,7 +29,7 @@ using System.Text;
 
 namespace Here.Api
 {
-	public static class Extensions
+	public static class HereExtensions
 	{
 		public static string Encode(this string value)
 		{

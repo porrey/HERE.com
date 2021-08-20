@@ -22,8 +22,8 @@
  */
 namespace Here.Api
 {
-	public class GeoCodeList
+	public class HereGeoCodeList
 	{
-		public GeoCodeItem[] Items { get; set; }
+		public HereGeoCodeItem[] Items { get; set; }
 	}
 }

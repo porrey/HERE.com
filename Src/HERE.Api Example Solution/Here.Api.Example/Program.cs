@@ -23,6 +23,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Here.Api.Example
@@ -35,12 +37,35 @@ namespace Here.Api.Example
 			// Go to your project at here.com and create OAuth 2.0 (JSON Web Tokens) credentials. This will prompt you
 			// to download a file named credentials.properties. Copy it to this project folder.
 			//
-			Credentials credentials = Credentials.FromFile("./credentials.properties");
+			HereCredentials credentials = HereCredentials.FromFile("./credentials.properties");
+			IHereTokenFactory hereTokenFactory = new HereTokenFactory();
+			HereToken token = await hereTokenFactory.CreateTokenAsync(credentials);
 
 			//
-			// Find and address.
+			// Get a sample map image.
 			//
-			(GeoCodeList result, ApiError error) = await Api.CheckAddressAsync(credentials, new Address()
+			using (HttpClient client = hereTokenFactory.CreateHttpClient(token))
+			{
+				byte[] imageData = await client.GetByteArrayAsync("https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/13/4400/2686/256/png8");
+
+				//
+				// Save the image to a temporary file.
+				//
+				string tempFile = $"{Path.GetTempFileName()}.png";
+				await File.WriteAllBytesAsync(tempFile, imageData);
+
+				//
+				// Open the image with the default system viewer.
+				//
+				Process.Start(new ProcessStartInfo(tempFile) { UseShellExecute = true });
+			}
+
+			//
+			// Use the GeoCode service to find and address.
+			//
+			IHereGeoCodeService hereGeoCodeService = new HereGeoCodeService();
+
+			(HereGeoCodeList result, HereApiError error) = await hereGeoCodeService.FindAddressAsync(token, new HereAddress()
 			{
 				Street = "600 E. Grand Avenue",
 				City = "Chicago",
@@ -55,22 +80,6 @@ namespace Here.Api.Example
 			{
 				Console.WriteLine($"Error: {error.Title}");
 			}
-
-			//
-			// Get a sample map image.
-			//
-			byte[] imageData = await Api.GetSampleMapImageAsync(credentials);
-
-			//
-			// Save the image to a temporary file.
-			//
-			string tempFile = $"{Path.GetTempFileName()}.png";
-			await File.WriteAllBytesAsync(tempFile, imageData);
-
-			//
-			// Open the image with the default system viewer.
-			//
-			Process.Start(new ProcessStartInfo(tempFile) { UseShellExecute = true });
 		}
 	}
 }

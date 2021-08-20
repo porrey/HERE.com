@@ -20,31 +20,12 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace Here.Api
 {
-	public class GeoCodeItem
+	public interface IHereGeoCodeService
 	{
-		[JsonProperty("title")]
-		public string Title { get; set; }
-
-		[JsonProperty("id")]
-		public string Id { get; set; }
-
-		[JsonProperty("resultType")]
-		public string ResultType { get; set; }
-
-		[JsonProperty("houseNumberType")]
-		public string HouseNumberType { get; set; }
-
-		[JsonProperty("address")]
-		public Address Address { get; set; }
-
-		[JsonProperty("position")]
-		public Position Position { get; set; }
-
-		[JsonProperty("access")]
-		public Position[] Access { get; set; }
+		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HereToken token, HereAddress address);
 	}
 }

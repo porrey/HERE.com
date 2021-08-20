@@ -34,9 +34,9 @@ namespace Here.Api
 	// https://developer.here.com/documentation/identity-access-management/dev_guide/topics/sdk.html#step-2-create-a-signature
 	// for details on how to use OAuth 1.0 to get a token for the here.com REST API.
 
-	public class OAuth1
+	public class HereOAuth1
 	{
-		public OAuth1(string url, string clientId, string clientKey)
+		public HereOAuth1(string url, string clientId, string clientKey)
 		{
 			this.Url = url;
 			this.ClientId = clientId;
@@ -47,9 +47,9 @@ namespace Here.Api
 		protected string ClientId { get; set; }
 		protected string ClientKey { get; set; }
 
-		public async Task<Token> GetTokenAsync()
+		public async Task<HereToken> GetTokenAsync()
 		{
-			Token returnValue = null;
+			HereToken returnValue = null;
 
 			//
 			// Create the nonce.
@@ -103,7 +103,7 @@ namespace Here.Api
 							//
 							// Deserialize the token.
 							//
-							returnValue = JsonConvert.DeserializeObject<Token>(responseContent);
+							returnValue = JsonConvert.DeserializeObject<HereToken>(responseContent);
 						}
 						else
 						{

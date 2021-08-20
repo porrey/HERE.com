@@ -24,12 +24,24 @@ using Newtonsoft.Json;
 
 namespace Here.Api
 {
-	public class Position
+	public class HereApiError
 	{
-		[JsonProperty("lat")]
-		public double Latitude { get; set; }
+		[JsonProperty("status")]
+		public int HttpStatusCode { get; set; }
 
-		[JsonProperty("lng")]
-		public double Longitude { get; set; }
+		[JsonProperty("title")]
+		public string Title { get; set; }
+
+		[JsonProperty("cause")]
+		public string Cause { get; set; }
+
+		[JsonProperty("action")]
+		public string Action { get; set; }
+
+		[JsonProperty("correlationId")]
+		public string CorrelationId { get; set; }
+
+		[JsonProperty("requestId")]
+		public string RequestId { get; set; }
 	}
 }

@@ -26,8 +26,38 @@ using System.Threading.Tasks;
 
 namespace Here.Api
 {
-	public static class Api
+	public class HereTokenFactory : IHereTokenFactory
 	{
-		
+		public HereToken CreateToken(HereCredentials credentials)
+		{
+			return this.CreateTokenAsync(credentials).Result;
+		}
+
+		public Task<HereToken> CreateTokenAsync(HereCredentials credentials)
+		{
+			//
+			// Create an instance of OAuth1
+			//
+			HereOAuth1 oauth = new(credentials.TokenEndPointUrl, credentials.AccessKeyId, credentials.AccessKeySecret);
+			return oauth.GetTokenAsync();
+		}
+
+		public HttpClient CreateHttpClient(HereToken token)
+		{
+			HttpClient client = new();
+
+			//
+			// Set up the headers.
+			//
+			client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", string.Format("Bearer {0}", token.AccessToken));
+			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+			return client;
+		}
+
+		public Task<HttpClient> CreateHttpClientAsync(HereToken token)
+		{
+			return Task.FromResult(this.CreateHttpClient(token));
+		}
 	}
 }

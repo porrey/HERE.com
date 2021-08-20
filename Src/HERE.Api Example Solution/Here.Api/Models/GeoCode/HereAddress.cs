@@ -25,7 +25,7 @@ using Newtonsoft.Json;
 
 namespace Here.Api
 {
-	public class Address
+	public class HereAddress
 	{
 		[JsonProperty("label")]
 		public string Label { get; set; }

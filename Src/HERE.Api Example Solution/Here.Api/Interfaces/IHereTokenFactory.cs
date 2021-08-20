@@ -21,13 +21,15 @@
  * DEALINGS IN THE SOFTWARE.
  */
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Here.Api
 {
-	public static class Api
+	public interface IHereTokenFactory
 	{
-		
+		HereToken CreateToken(HereCredentials credentials);
+		Task<HereToken> CreateTokenAsync(HereCredentials credentials);
+		Task<HttpClient> CreateHttpClientAsync(HereToken token);
+		HttpClient CreateHttpClient(HereToken token);
 	}
 }
