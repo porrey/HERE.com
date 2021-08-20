@@ -20,41 +20,25 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Here.Api.Models;
 using Newtonsoft.Json;
 
 namespace Here.Api
 {
 	public static class Api
 	{
-		public static Task<Token> GetTokenAsync()
+		public static Task<Token> GetTokenAsync(Credentials credentials)
 		{
-			//
-			// Go to your project at here.com and create OAuth 2.0 (JSON Web Tokens) credentials. This will prompt you
-			// to download a file named credentials.properties. Copy it to this project folder.
-			//
-
-			//
-			// Read the credentials.properties file given by the HERE API.
-			//
-			var credentials = new Dictionary<string, string>(from tbl in File.ReadAllLines("./credentials.properties")
-															 let x = tbl.Split(" = ")
-															 select new KeyValuePair<string, string>(x[0], x[1]));
-
 			//
 			// Create an instance of OAuth1
 			//
-			OAuth1 oauth = new(credentials["here.token.endpoint.url"], credentials["here.access.key.id"], credentials["here.access.key.secret"]);
+			OAuth1 oauth = new(credentials.TokenEndPointUrl, credentials.AccessKeyId, credentials.AccessKeySecret);
 			return oauth.GetTokenAsync();
 		}
 
-		public static async Task<(GeoCodeList, ApiError)> CheckAddressAsync(Address address)
+		public static async Task<(GeoCodeList, ApiError)> CheckAddressAsync(Credentials credentials, Address address)
 		{
 			(GeoCodeList addressResponse, ApiError error) = (null, null);
 
@@ -66,7 +50,7 @@ namespace Here.Api
 				//
 				// Set up the headers.
 				//
-				Token token = await Api.GetTokenAsync();
+				Token token = await Api.GetTokenAsync(credentials);
 				client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", string.Format("Bearer {0}", token.AccessToken));
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -89,7 +73,7 @@ namespace Here.Api
 			return (addressResponse, error);
 		}
 
-		public static async Task<byte[]> GetSampleMapImageAsync()
+		public static async Task<byte[]> GetSampleMapImageAsync(Credentials credentials)
 		{
 			//
 			// Make and API call.
@@ -99,7 +83,7 @@ namespace Here.Api
 				//
 				// Set up the headers.
 				//
-				Token token = await Api.GetTokenAsync();
+				Token token = await Api.GetTokenAsync(credentials);
 				client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", string.Format("Bearer {0}", token.AccessToken));
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 

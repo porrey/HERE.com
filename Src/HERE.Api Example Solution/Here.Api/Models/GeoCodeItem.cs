@@ -22,7 +22,7 @@
  */
 using Newtonsoft.Json;
 
-namespace Here.Api.Models
+namespace Here.Api
 {
 	public class GeoCodeItem
 	{

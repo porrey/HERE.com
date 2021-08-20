@@ -24,18 +24,23 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Here.Api.Models;
 
-namespace Here.Api
+namespace Here.Api.Example
 {
 	class Program
 	{
 		static async Task Main(string[] args)
 		{
 			//
+			// Go to your project at here.com and create OAuth 2.0 (JSON Web Tokens) credentials. This will prompt you
+			// to download a file named credentials.properties. Copy it to this project folder.
+			//
+			Credentials credentials = Credentials.FromFile("./credentials.properties");
+
+			//
 			// Find and address.
 			//
-			(GeoCodeList result, ApiError error) = await Api.CheckAddressAsync(new Address()
+			(GeoCodeList result, ApiError error) = await Api.CheckAddressAsync(credentials, new Address()
 			{
 				Street = "600 E. Grand Avenue",
 				City = "Chicago",
@@ -54,7 +59,7 @@ namespace Here.Api
 			//
 			// Get a sample map image.
 			//
-			byte[] imageData = await Api.GetSampleMapImageAsync();
+			byte[] imageData = await Api.GetSampleMapImageAsync(credentials);
 
 			//
 			// Save the image to a temporary file.

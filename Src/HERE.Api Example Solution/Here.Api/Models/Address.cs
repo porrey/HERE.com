@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Here.Api.Models
+namespace Here.Api
 {
 	public class Address
 	{
