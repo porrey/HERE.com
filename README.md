@@ -7,7 +7,45 @@ Example command line:
 
 `HERE.GpsSimulator generate --origin "600 E Grand Avenue, Chicago IL" --destination "1300 Fox St Denver CO 80204" --departuretime "11/21/2021 11:00 AM" --grossweight 75000 --interval 00:15:00 --axlecount 5 --trailercount 1 --type tractor --routingmode short --regulation true --lastrest 2 --outputfile "%USERPROFILE%/Desktop/gps-data.json"`
 
-## HERE.com
+Type `HERE.GpsSimulator -h` for parameter info. You will get the output shown below.
+
+	HERE.GpsSimulator
+	
+	Usage:
+  	HERE.GpsSimulator [options] [command]
+
+	Options:
+  		--version       Show version information
+  		-?, -h, --help  Show help and usage information
+
+	Commands:
+  		generate  Generates GPS pings from a specified origin point to a destination point.
+  
+For specific command help, type `HERE.GpsSimulator -h [command]`. For example, `1 gives the output shown below.
+
+	generate
+	  Generates GPS pings from a speified origin point to a destination point.
+
+	Usage:
+	  HERE.GpsSimulator [options] generate
+	
+	Options:
+	  -o, --origin <origin> (REQUIRED)            A location defining the origin of the trip.
+	  -d, --destination <destination> (REQUIRED)  A location defining the destination of the trip.
+	  -p, --departuretime <departuretime>         Specifies the time of departure. The default is the current date and time.
+	  -g, --grossweight <grossweight>             Vehicle weight including trailers and shipped goods, in LBS. The default is 75,000.
+	  -a, --axlecount <axlecount>                 Defines total number of axles in the vehicle. Default is 5.
+	  -c, --trailercount <trailercount>           Number of trailers attached to the vehicle. Default is 1.
+	  -t, --type <type>                           Specifies the type of truck. Possible values are 'Straight' or 'Tractor'. The default is Tractor.
+	  -m, --routingmode <routingmode>             Specifies which optimization is applied during route calculation. Can be 'Fast' or 'Short'. The default is Short.
+	  -i, --interval <interval>                   Specifies the interval used to generate GPS updates. The default is every 15 minutes.
+	  -r, --regulation <regulation>               Specifies whether US driver regulations should be observed. The default is True.
+	  -h, --lastrest <lastrest>                   Specifies the number of hours since the driver's last rest before picking up the load. The default is 0.
+	  -f, --outputfile <outputfile>               Specifies the full path to the JSON output file.
+	  -?, -h, --help                              Show help and usage information                                 Show help and usage information
+
+
+## HERE.Api and HERE.Api.Example
 
 Example code to Authenticate to the HERE.com REST API in C# using OAuth 1.0 and OAuth 2.0. Also demonstrates a map request and Geo Code request.
 	
