@@ -5,7 +5,10 @@ The example code demonstrates how to use the HERE API to create a route between 
 
 Example command line:
 
-`HERE.GpsSimulator generate --origin "600 E Grand Avenue, Chicago IL" --destination "1300 Fox St Denver CO 80204" --departuretime "11/21/2021 11:00 AM" --grossweight 75000 --interval 00:15:00 --axlecount 5 --trailercount 1 --type tractor --routingmode short --regulation true --lastrest 2 --outputfile "%USERPROFILE%/Desktop/gps-data.json"`
+	HERE.GpsSimulator generate --origin "600 E Grand Avenue, Chicago IL" --destination "1300 Fox St Denver CO 80204" 
+	--departuretime "11/21/2021 11:00 AM" --grossweight 75000 --interval 00:15:00 --axlecount 5 --trailercount 1 
+	--type tractor --routingmode short --regulation true --lastrest 2 
+	--outputfile "%USERPROFILE%/Desktop/gps-data.json"
 
 Type `HERE.GpsSimulator -h` for parameter info. You will get the output shown below.
 
