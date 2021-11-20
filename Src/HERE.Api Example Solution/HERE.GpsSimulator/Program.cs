@@ -27,30 +27,31 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 
 //
-// See https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-5.0
+// See https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-6.0
 // for details on host based applications.
 //
 
 namespace HERE.GpsSimulator
 {
 	/// <summary>
-	/// 
+	/// Entry program class.
 	/// </summary>
 	public class Program
 	{
 		/// <summary>
-		/// 
+		/// Entry point of the application.
 		/// </summary>
-		/// <param name="args"></param>
-		/// <returns></returns>
-		static Task<int> Main(string[] args) => Host.CreateDefaultBuilder(args)
-							.AddRootCommand("HERE GPS Simulator", args)
-							.UseStartup<ConsoleStartup>()
-							.UseSerilog()
-							.ConfigureServicesFolder("Services")
-							.UseConfiguredServices()
-							.UseConsoleLifetime()
-							.Build()
-							.RunWithExitCodeAsync();
+		/// <param name="args">Contains the argument passed to the application.</param>
+		/// <returns>Returns 0 if the program completed successfully. Any other value
+		/// indicates and error and is specific to the application.</returns>
+		public static Task<int> Main(string[] args) => Host.CreateDefaultBuilder(args)
+									.AddRootCommand("HERE GPS Simulator", args)
+									.UseStartup<ConsoleStartup>()
+									.UseSerilog()
+									.ConfigureServicesFolder("Services")
+									.UseConfiguredServices()
+									.UseConsoleLifetime()
+									.Build()
+									.RunWithExitCodeAsync();
 	}
 }
