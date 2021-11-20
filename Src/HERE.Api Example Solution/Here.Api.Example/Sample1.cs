@@ -20,14 +20,36 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System.Net.Http;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
-namespace HERE.Api
+namespace HERE.Api.Example
 {
-	public interface IHereGeoCodeService
+	public class Sample1 : SampleTemplate
 	{
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, HereAddress address);
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, string address);
+		public override async Task<bool> RunAsync(HereHttpClient client)
+		{
+			using (client)
+			{
+				//
+				// Get a sample map image.
+				//
+				byte[] imageData = await client.GetByteArrayAsync("https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/13/4400/2686/256/png8");
+
+				//
+				// Save the image to a temporary file.
+				//
+				string tempFile = $"{Path.GetTempFileName()}.png";
+				await File.WriteAllBytesAsync(tempFile, imageData);
+
+				//
+				// Open the image with the default system viewer.
+				//
+				Process.Start(new ProcessStartInfo(tempFile) { UseShellExecute = true });
+			}
+
+			return true;
+		}
 	}
 }

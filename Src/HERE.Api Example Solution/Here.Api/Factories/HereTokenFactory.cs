@@ -2,7 +2,7 @@
  *
  * MIT License
  * 
- * Copyright (c) 2021 Daniel Porrey
+ * Copyright (c) 2021-2022 Daniel Porrey
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -20,11 +20,10 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Here.Api
+namespace HERE.Api
 {
 	public class HereTokenFactory : IHereTokenFactory
 	{
@@ -42,9 +41,12 @@ namespace Here.Api
 			return oauth.GetTokenAsync();
 		}
 
-		public HttpClient CreateHttpClient(HereToken token)
+		public HereHttpClient CreateHttpClient(HereToken token)
 		{
-			HttpClient client = new();
+			HereHttpClient client = new()
+			{
+				Token = token
+			};
 
 			//
 			// Set up the headers.
@@ -55,7 +57,7 @@ namespace Here.Api
 			return client;
 		}
 
-		public Task<HttpClient> CreateHttpClientAsync(HereToken token)
+		public Task<HereHttpClient> CreateHttpClientAsync(HereToken token)
 		{
 			return Task.FromResult(this.CreateHttpClient(token));
 		}

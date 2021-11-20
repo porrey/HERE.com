@@ -20,14 +20,40 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System.Net.Http;
+using System;
 using System.Threading.Tasks;
 
-namespace HERE.Api
+namespace HERE.Api.Example
 {
-	public interface IHereGeoCodeService
+	public class Sample2 : SampleTemplate
 	{
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, HereAddress address);
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, string address);
+		public override async Task<bool> RunAsync(HereHttpClient client)
+		{
+			bool returnValue = false;
+
+			//
+			// Use the GeoCode service to find and address.
+			//
+			IHereGeoCodeService hereGeoCodeService = new HereGeoCodeService();
+
+			(HereGeoCodeList result, HereApiError error) = await hereGeoCodeService.FindAddressAsync(client, new HereAddress()
+			{
+				Street = "600 E. Grand Avenue",
+				City = "Chicago",
+				State = "IL"
+			});
+
+			if (error == null)
+			{
+				returnValue = true;
+				Console.WriteLine($"Result: {result.Items[0].Title}, {result.Items[0].Id}");
+			}
+			else
+			{
+				Console.WriteLine($"Error: {error.Title}");
+			}
+
+			return returnValue;
+		}
 	}
 }

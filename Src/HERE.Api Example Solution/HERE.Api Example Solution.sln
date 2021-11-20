@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31205.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Here.Api.Example", "Here.Api.Example\Here.Api.Example.csproj", "{CB88323C-FE8C-48CC-BB03-753DE2B310CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HERE.Api.Example", "Here.Api.Example\HERE.Api.Example.csproj", "{CB88323C-FE8C-48CC-BB03-753DE2B310CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Here.Api", "Here.Api\Here.Api.csproj", "{E05E5A9C-41AD-4A8C-B0A2-55E531117F44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HERE.Api", "Here.Api\HERE.Api.csproj", "{E05E5A9C-41AD-4A8C-B0A2-55E531117F44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HERE.GpsSimulator", "HERE.GpsSimulator\HERE.GpsSimulator.csproj", "{CB5A2953-D282-4341-965A-57D98138B376}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E05E5A9C-41AD-4A8C-B0A2-55E531117F44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E05E5A9C-41AD-4A8C-B0A2-55E531117F44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E05E5A9C-41AD-4A8C-B0A2-55E531117F44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB5A2953-D282-4341-965A-57D98138B376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB5A2953-D282-4341-965A-57D98138B376}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB5A2953-D282-4341-965A-57D98138B376}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB5A2953-D282-4341-965A-57D98138B376}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

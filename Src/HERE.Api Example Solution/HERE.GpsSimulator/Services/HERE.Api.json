@@ -1,0 +1,24 @@
+{
+	"aliases": [
+		{
+			"Key": "IHereTokenFactory",
+			"TypeDefinition": "HERE.Api.IHereTokenFactory, HERE.Api"
+		},
+		{
+			"Key": "IHereGeoCodeService",
+			"TypeDefinition": "HERE.Api.IHereGeoCodeService, HERE.Api"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "<IHereTokenFactory>",
+			"ImplementationType": "HERE.Api.HereTokenFactory, HERE.Api",
+			"Lifetime": "Scoped"
+		},
+		{
+			"ServiceType": "<IHereGeoCodeService>",
+			"ImplementationType": "HERE.Api.HereGeoCodeService, HERE.Api",
+			"Lifetime": "Scoped"
+		}
+	]
+}

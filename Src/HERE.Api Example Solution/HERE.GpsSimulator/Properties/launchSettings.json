@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "HERE.GpsSimulator": {
+      "commandName": "Project",
+      "commandLineArgs": "generate --origin \"1000 WINDHAM PARKWAY Bolingbrook IL\" --destination \"1300 Fox St Denver CO 80204\" --departuretime \"11/21/2021 11:00 AM\" --grossweight 75000 --interval 00:15:00 --axlecount 5 --trailercount 1 --type tractor --routingmode short --regulation true --lastrest 2 --outputfile \"%USERPROFILE%/Desktop/gps-data.json\"",
+      "environmentVariables": {
+        "LOG_FOLDER": "%TEMP%\\HERE"
+      }
+    }
+  }
+}

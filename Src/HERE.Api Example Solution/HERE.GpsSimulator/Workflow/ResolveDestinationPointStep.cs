@@ -1,0 +1,59 @@
+﻿using Diamond.Core.Workflow;
+using HERE.Api;
+using Microsoft.Extensions.Logging;
+
+namespace HERE.GpsSimulator
+{
+	public class ResolveDestinationPointStep : WorkflowItem
+	{
+		public ResolveDestinationPointStep(ILogger<ResolveDestinationPointStep> logger, IHereTokenFactory hereTokenFactory, IHereGeoCodeService hereGeoCodeService)
+			: base(logger)
+		{
+			this.HereTokenFactory = hereTokenFactory;
+			this.HereGeoCodeService = hereGeoCodeService;
+		}
+
+		protected IHereTokenFactory HereTokenFactory { get; set; }
+		protected IHereGeoCodeService HereGeoCodeService { get; set; }
+
+		protected override async Task<bool> OnExecuteStepAsync(IContext context)
+		{
+			bool returnValue = false;
+
+			//
+			// Get the token from the context.
+			//
+			HereToken token = context.Properties.Get<HereToken>(WellKnown.Context.Token);
+
+			//
+			// Create a client.
+			//
+			HereHttpClient client = this.HereTokenFactory.CreateHttpClient(token);
+
+			//
+			// Get the options from the context.
+			//
+			OptionsViewModel options = context.Properties.Get<OptionsViewModel>(WellKnown.Context.Options);
+
+			//
+			// Call the HERE service.
+			//
+			(HereGeoCodeList destination, HereApiError destinationError) = await this.HereGeoCodeService.FindAddressAsync(client, options.Destination );
+
+			//
+			// Check the result.
+			//
+			if (destinationError == null)
+			{
+				context.Properties.Set(WellKnown.Context.Destination, destination.Items[0]);
+				returnValue = true;
+			}
+			else
+			{
+				await this.StepFailedAsync(context, $"Destination error: '{destinationError}'.");
+			}
+
+			return returnValue;
+		}
+	}
+}

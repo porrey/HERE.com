@@ -2,7 +2,7 @@
  *
  * MIT License
  * 
- * Copyright (c) 2021 Daniel Porrey
+ * Copyright (c) 2021-2022 Daniel Porrey
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -20,11 +20,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-
-namespace Here.Api
+namespace HERE.Api
 {
 	public static class Api
 	{

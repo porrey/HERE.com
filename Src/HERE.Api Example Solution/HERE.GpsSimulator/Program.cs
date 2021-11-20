@@ -20,14 +20,37 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System.Net.Http;
-using System.Threading.Tasks;
+using Diamond.Core.CommandLine;
+using Diamond.Core.Extensions.DependencyInjection;
+using Diamond.Core.Extensions.Hosting;
+using Microsoft.Extensions.Hosting;
+using Serilog;
 
-namespace HERE.Api
+//
+// See https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-5.0
+// for details on host based applications.
+//
+
+namespace HERE.GpsSimulator
 {
-	public interface IHereGeoCodeService
+	/// <summary>
+	/// 
+	/// </summary>
+	public class Program
 	{
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, HereAddress address);
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, string address);
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="args"></param>
+		/// <returns></returns>
+		static Task<int> Main(string[] args) => Host.CreateDefaultBuilder(args)
+							.AddRootCommand("HERE GPS Simulator", args)
+							.UseStartup<ConsoleStartup>()
+							.UseSerilog()
+							.ConfigureServicesFolder("Services")
+							.UseConfiguredServices()
+							.UseConsoleLifetime()
+							.Build()
+							.RunWithExitCodeAsync();
 	}
 }

@@ -2,7 +2,7 @@
  *
  * MIT License
  * 
- * Copyright (c) 2021 Daniel Porrey
+ * Copyright (c) 2021-2022 Daniel Porrey
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -21,15 +21,61 @@
  * DEALINGS IN THE SOFTWARE.
  */
 using Newtonsoft.Json;
+using System;
 
-namespace Here.Api
+namespace HERE.Api
 {
 	public class HerePosition
 	{
+		public HerePosition()
+		{
+			Latitude = 0;
+			Longitude = 0;
+			Elevation = 0;
+		}
+
+		public HerePosition(double latitude, double longitude, double elevation = 0)
+		{
+			Latitude = latitude;
+			Longitude = longitude;
+			Elevation = elevation;
+		}
+
 		[JsonProperty("lat")]
 		public double Latitude { get; set; }
 
 		[JsonProperty("lng")]
 		public double Longitude { get; set; }
+
+		[JsonProperty("elevation")]
+		public double Elevation { get; }
+
+		public override string ToString()
+		{
+			return "HerePosition [latitude=" + Latitude + ", longitude=" + Longitude + ", elevation=" + Elevation + "]";
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (this == obj)
+			{
+				return true;
+			}
+
+			if (obj is HerePosition herePosition)
+			{
+				if (herePosition.Latitude == Latitude && herePosition.Longitude == Longitude && herePosition.Elevation == Elevation)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(Latitude, Longitude, Elevation);
+		}
 	}
 }

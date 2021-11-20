@@ -21,13 +21,26 @@
  * DEALINGS IN THE SOFTWARE.
  */
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace HERE.Api
 {
-	public interface IHereGeoCodeService
+	public class HereHttpClient : HttpClient
 	{
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, HereAddress address);
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, string address);
+		public HereHttpClient()
+			: base()
+		{
+		}
+
+		public HereHttpClient(HttpMessageHandler handler)
+			: base(handler)
+		{
+		}
+
+		public HereHttpClient(HttpMessageHandler handler, bool disposeHandler)
+			: base(handler, disposeHandler)
+		{
+		}
+
+		public HereToken Token { get; set; }
 	}
 }

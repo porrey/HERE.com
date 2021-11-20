@@ -20,14 +20,16 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System.Net.Http;
+using System;
 using System.Threading.Tasks;
 
-namespace HERE.Api
+namespace HERE.Api.Example
 {
-	public interface IHereGeoCodeService
+	public abstract class SampleTemplate : ISample
 	{
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, HereAddress address);
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, string address);
+		public virtual Task<bool> RunAsync(HereHttpClient client)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

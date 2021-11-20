@@ -20,14 +20,40 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System.Net.Http;
-using System.Threading.Tasks;
+using Diamond.Core.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Serilog;
 
-namespace HERE.Api
+namespace HERE.GpsSimulator
 {
-	public interface IHereGeoCodeService
+	/// <summary>
+	/// This startup class is called by the host builder. The host build checks which
+	/// interfaces are implemented and then calls the interfaces methods.
+	/// </summary>
+	public class ConsoleStartup : IStartupConfiguration, IStartupAppConfiguration
 	{
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, HereAddress address);
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, string address);
+		/// <summary>
+		/// 
+		/// </summary>
+		public IConfiguration? Configuration { get; set; }
+
+		/// <summary>
+		/// Called to configure additional settings.
+		/// </summary>
+		/// <param name="builder"></param>
+		public void ConfigureAppConfiguration(IConfigurationBuilder builder)
+		{
+			//
+			// Build the configuration so Serilog can read from it.
+			//
+			IConfigurationRoot configuration = builder.Build();
+
+			//
+			// Create a logger from the configuration.
+			//
+			Log.Logger = new LoggerConfiguration()
+					  .ReadFrom.Configuration(configuration)
+					  .CreateLogger();
+		}
 	}
 }

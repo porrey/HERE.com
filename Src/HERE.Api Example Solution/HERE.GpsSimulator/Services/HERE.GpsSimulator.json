@@ -1,0 +1,154 @@
+{
+	"services": [
+		{
+			"ServiceType": "<ICommand>",
+			"ImplementationType": "HERE.GpsSimulator.GenerateCommandHandler, HERE.GpsSimulator",
+			"Lifetime": "Scoped"
+		},
+		//
+		// Rules
+		//
+		{
+			"ServiceType": "<IRule>",
+			"ImplementationType": "HERE.GpsSimulator.AxleCountRule, HERE.GpsSimulator",
+			"Lifetime": "Scoped"
+		},
+		{
+			"ServiceType": "<IRule>",
+			"ImplementationType": "HERE.GpsSimulator.HoursRule, HERE.GpsSimulator",
+			"Lifetime": "Scoped"
+		},
+		{
+			"ServiceType": "<IRule>",
+			"ImplementationType": "HERE.GpsSimulator.TrailerCountRule, HERE.GpsSimulator",
+			"Lifetime": "Scoped"
+		},
+		{
+			"ServiceType": "<IRule>",
+			"ImplementationType": "HERE.GpsSimulator.WeightRule, HERE.GpsSimulator",
+			"Lifetime": "Scoped"
+		},
+		//
+		// Work-Flow Manager
+		//
+		{
+			"ServiceType": "<IWorkflowManager>",
+			"ImplementationType": "Diamond.Core.Workflow.LinearHaltWorkflowManager, Diamond.Core.Workflow",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow"
+			}
+		},
+		//
+		// Work-Flow Steps
+		//
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.VerifyViewModelStep, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 1
+			}
+		},
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.LoadCredentialsStep, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 2
+			}
+		},
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.GetHereTokenStep, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 3
+			}
+		},
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.ResolveOriginPointStep, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 4
+			}
+		},
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.ResolveDestinationPointStep, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 5
+			}
+		},
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.GetRouteStep, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 6
+			}
+		},
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.SequenceRouteStep, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 7
+			}
+		},
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.ApplyDriverRegulationsStep, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 8
+			}
+		},
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.SynchronizeTimeStampStep, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 9
+			}
+		},
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.CreateGpsPointsStep, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 10
+			}
+		},
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.CaclulateRemainingStep, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 11
+			}
+		},
+		{
+			"ServiceType": "<IWorkflowItem>",
+			"ImplementationType": "HERE.GpsSimulator.WriteOutputFile, HERE.GpsSimulator",
+			"Lifetime": "Scoped",
+			"Properties": {
+				"Group": "RouteWorkflow",
+				"Ordinal": 12
+			}
+		}
+	]
+}

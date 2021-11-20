@@ -2,7 +2,7 @@
  *
  * MIT License
  * 
- * Copyright (c) 2021 Daniel Porrey
+ * Copyright (c) 2021-2022 Daniel Porrey
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -20,14 +20,9 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Here.Api.Example
+namespace HERE.Api.Example
 {
 	class Program
 	{
@@ -42,44 +37,14 @@ namespace Here.Api.Example
 			HereToken token = await hereTokenFactory.CreateTokenAsync(credentials);
 
 			//
-			// Get a sample map image.
+			// Run sample 1.
 			//
-			using (HttpClient client = hereTokenFactory.CreateHttpClient(token))
-			{
-				byte[] imageData = await client.GetByteArrayAsync("https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/13/4400/2686/256/png8");
-
-				//
-				// Save the image to a temporary file.
-				//
-				string tempFile = $"{Path.GetTempFileName()}.png";
-				await File.WriteAllBytesAsync(tempFile, imageData);
-
-				//
-				// Open the image with the default system viewer.
-				//
-				Process.Start(new ProcessStartInfo(tempFile) { UseShellExecute = true });
-			}
+			await (new Sample1()).RunAsync(hereTokenFactory.CreateHttpClient(token));
 
 			//
-			// Use the GeoCode service to find and address.
+			// Run sample 2.
 			//
-			IHereGeoCodeService hereGeoCodeService = new HereGeoCodeService();
-
-			(HereGeoCodeList result, HereApiError error) = await hereGeoCodeService.FindAddressAsync(token, new HereAddress()
-			{
-				Street = "600 E. Grand Avenue",
-				City = "Chicago",
-				State = "IL"
-			});
-
-			if (error == null)
-			{
-				Console.WriteLine($"Result: {result.Items[0].Title}, {result.Items[0].Id}");
-			}
-			else
-			{
-				Console.WriteLine($"Error: {error.Title}");
-			}
+			await (new Sample2()).RunAsync(hereTokenFactory.CreateHttpClient(token));
 		}
 	}
 }

@@ -2,7 +2,7 @@
  *
  * MIT License
  * 
- * Copyright (c) 2021 Daniel Porrey
+ * Copyright (c) 2021-2022 Daniel Porrey
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -20,55 +20,70 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
 
-namespace Here.Api
+namespace HERE.Api
 {
 	public class HereGeoCodeService : IHereGeoCodeService
 	{
 		public HereGeoCodeService()
-			:this("https://geocode.search.hereapi.com/v1/geocode")
+			: this("https://geocode.search.hereapi.com/v1/geocode")
 		{
 		}
 
 		public HereGeoCodeService(string baseUrl)
 		{
-			this.Baseurl = baseUrl;
+			this.BaseUrl = baseUrl;
 		}
 
-		protected string Baseurl { get; set; }
+		protected string BaseUrl { get; set; }
 
-		public async Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HereToken token, HereAddress address)
+		public async Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, HereAddress address)
 		{
 			(HereGeoCodeList addressResponse, HereApiError error) = (null, null);
 
 			//
 			// Make and API call.
 			//
-			using (HttpClient client = new())
+			string uri = $"{this.BaseUrl}?qq={address}";
+			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{
-				//
-				// Set up the headers.
-				//
-				client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", string.Format("Bearer {0}", token.AccessToken));
-				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				string json = await response.Content.ReadAsStringAsync();
 
-				string uri = $"{this.Baseurl}?qq={address}";
-				using (HttpResponseMessage response = await client.GetAsync(uri))
+				if (response.IsSuccessStatusCode)
 				{
-					string json = await response.Content.ReadAsStringAsync();
+					addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(json);
+				}
+				else
+				{
+					error = JsonConvert.DeserializeObject<HereApiError>(json);
+				}
+			}
 
-					if (response.IsSuccessStatusCode)
-					{
-						addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(json);
-					}
-					else
-					{
-						error = JsonConvert.DeserializeObject<HereApiError>(json);
-					}
+			return (addressResponse, error);
+		}
+
+		public async Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, string address)
+		{
+			(HereGeoCodeList addressResponse, HereApiError error) = (null, null);
+
+			//
+			// Make and API call.
+			//
+			string uri = $"{this.BaseUrl}?q={address}";
+			using (HttpResponseMessage response = await client.GetAsync(uri))
+			{
+				string json = await response.Content.ReadAsStringAsync();
+
+				if (response.IsSuccessStatusCode)
+				{
+					addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(json);
+				}
+				else
+				{
+					error = JsonConvert.DeserializeObject<HereApiError>(json);
 				}
 			}
 

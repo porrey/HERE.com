@@ -1,0 +1,43 @@
+{
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "ICommand",
+			"TypeDefinition": "System.CommandLine.ICommand, System.CommandLine"
+		},
+		{
+			"Key": "IRule",
+			"TypeDefinition": "Diamond.Core.Rules.IRule, Diamond.Core.Rules.Abstractions"
+		},
+		{
+			"Key": "IWorkflowManager",
+			"TypeDefinition": "Diamond.Core.Workflow.IWorkflowManager, Diamond.Core.Workflow.Abstractions"
+		},
+		{
+			"Key": "IWorkflowItem",
+			"TypeDefinition": "Diamond.Core.Workflow.IWorkflowItem, Diamond.Core.Workflow.Abstractions"
+		}
+	],
+	"services": [
+		//
+		// Diamond.Core Factories
+		//
+		{
+			"ServiceType": "Diamond.Core.Workflow.IWorkflowItemFactory, Diamond.Core.Workflow.Abstractions",
+			"ImplementationType": "Diamond.Core.Workflow.WorkflowItemFactory, Diamond.Core.Workflow",
+			"Lifetime": "Scoped"
+		},
+		{
+			"ServiceType": "Diamond.Core.Workflow.IWorkflowManagerFactory, Diamond.Core.Workflow.Abstractions",
+			"ImplementationType": "Diamond.Core.Workflow.WorkflowManagerFactory, Diamond.Core.Workflow",
+			"Lifetime": "Scoped"
+		},
+		{
+			"ServiceType": "Diamond.Core.Rules.IRulesFactory, Diamond.Core.Rules.Abstractions",
+			"ImplementationType": "Diamond.Core.Rules.RulesFactory, Diamond.Core.Rules",
+			"Lifetime": "Scoped"
+		}
+	]
+}

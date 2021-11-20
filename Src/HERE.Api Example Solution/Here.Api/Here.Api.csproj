@@ -1,8 +1,30 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Version>6.0.0</Version>
+		<FileVersion>6.0.0</FileVersion>
+		<AssemblyVersion>6.0.0</AssemblyVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Description>Provides OAuth 1 authorization for the HERE.com REST API.</Description>
+		<Copyright>Copyright (c) 2021-2022 Daniel Porrey</Copyright>
+		<PackageProjectUrl>https://github.com/porrey/HERE.com</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/porrey/HERE.com.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>HERE; REST; OAuth1; Geo</PackageTags>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<NeutralLanguage>en</NeutralLanguage>
+		<Company>Daniel M. Porrey</Company>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
