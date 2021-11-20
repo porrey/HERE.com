@@ -7,7 +7,7 @@ namespace HERE.GpsSimulator
 	public class GenerateCommandHandler : ModelCommand<OptionsViewModel>
 	{
 		public GenerateCommandHandler(ILogger<GenerateCommandHandler> logger, IWorkflowManagerFactory workflowManagerFactory) :
-			base(logger, "generate", "Generates GPS pings from a speified origin point to a destination point.")
+			base(logger, "generate", "Generates GPS pings from a specified origin point to a destination point.")
 		{
 			this.WorkflowManagerFactory = workflowManagerFactory;
 		}
