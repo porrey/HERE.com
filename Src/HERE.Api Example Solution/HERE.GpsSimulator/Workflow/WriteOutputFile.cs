@@ -38,9 +38,18 @@ namespace HERE.GpsSimulator
 			}
 
 			//
+			//
+			//
+			OutputModel model = new()
+			{
+				Options = options,
+				Pings = routePings
+			};
+
+			//
 			// Serialize the list to JSON.
 			//
-			string json = JsonConvert.SerializeObject(routePings, Formatting.Indented);
+			string json = JsonConvert.SerializeObject(model, Formatting.Indented);
 
 			//
 			// Write the output file.

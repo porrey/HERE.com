@@ -61,7 +61,7 @@ namespace HERE.GpsSimulator
 						{ "grossWeight", $"{options.GrossWeight / 2.20462262}" },
 						{ "axleCount", $"{options.AxleCount}" },
 						{ "trailerCount", $"{options.TrailerCount}" },
-						{ "type", $"{options.Type}" }
+						{ "type", $"{options.TruckType}" }
 					};
 
 			//
