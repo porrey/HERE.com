@@ -37,11 +37,11 @@ namespace HERE.GpsSimulator
 
 		[Display(Order = 1, Name = "axleCount", ShortName = "a", Description = "Defines total number of axles in the vehicle. Default is 5.")]
 		[JsonPropertyName("axleCount")]
-		public uint AxleCount { get; set; } = 5;
+		public int AxleCount { get; set; } = 5;
 
 		[Display(Order = 1, Name = "trailerCount", ShortName = "c", Description = "Number of trailers attached to the vehicle. Default is 1.")]
 		[JsonPropertyName("trailerCount")]
-		public uint TrailerCount { get; set; } = 1;
+		public int TrailerCount { get; set; } = 1;
 
 		[Display(Order = 1, Name = "type", ShortName = "t", Description = "Specifies the type of truck. Possible values are 'Straight' or 'Tractor'. The default is Tractor.")]
 		[JsonPropertyName("type")]

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace HERE.GpsSimulator
 {
-	public class SequenceRouteStep : WorkflowItem
+	public class SequenceRouteStep : TemplateWorkflowStep
 	{
 		public SequenceRouteStep(ILogger<SequenceRouteStep> logger)
 			: base(logger)
@@ -71,6 +71,8 @@ namespace HERE.GpsSimulator
 				}
 			}
 
+			this.Render(context, $"Sequencing of GPS data completed.");
+			this.Render(context, $"");
 			this.Logger.LogInformation("Sequencing of GPS data completed.");
 			returnValue = true;
 

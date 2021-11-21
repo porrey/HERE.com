@@ -1,9 +1,10 @@
-﻿using Diamond.Core.Workflow;
+﻿using System.CommandLine.Rendering;
+using Diamond.Core.Workflow;
 using Microsoft.Extensions.Logging;
 
 namespace HERE.GpsSimulator
 {
-	public class CreateGpsPointsStep : WorkflowItem
+	public class CreateGpsPointsStep : TemplateWorkflowStep
 	{
 		public CreateGpsPointsStep(ILogger<CreateGpsPointsStep> logger)
 			: base(logger)
@@ -15,6 +16,7 @@ namespace HERE.GpsSimulator
 			bool returnValue = false;
 
 			this.Logger.LogInformation("Generating GPS ping data.");
+			this.Render(context, $"Generating GPS ping data.");
 
 			//
 			// Get the route data from the context.
@@ -117,6 +119,9 @@ namespace HERE.GpsSimulator
 			this.Logger.LogInformation("Generation of GPS ping data completed successfully.");
 			context.Properties.Set(WellKnown.Context.RoutePings, routePings.ToArray());
 			returnValue = true;
+
+			this.Render(context, $"\tNumber of points: {StyleSpan.BoldOn()}{ForegroundColorSpan.White()}{routePings.Count()}{ForegroundColorSpan.Reset()}{StyleSpan.BoldOff()}");
+			this.Render(context, $"");
 
 			return Task.FromResult(returnValue);
 		}

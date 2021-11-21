@@ -15,7 +15,7 @@
 		},
 		{
 			"ServiceType": "<IRule>",
-			"ImplementationType": "HERE.GpsSimulator.HoursRule, HERE.GpsSimulator",
+			"ImplementationType": "HERE.GpsSimulator.LastRestRule, HERE.GpsSimulator",
 			"Lifetime": "Scoped"
 		},
 		{
@@ -44,7 +44,7 @@
 		//
 		{
 			"ServiceType": "<IWorkflowItem>",
-			"ImplementationType": "HERE.GpsSimulator.VerifyViewModelStep, HERE.GpsSimulator",
+			"ImplementationType": "HERE.GpsSimulator.ValidateViewModelStep, HERE.GpsSimulator",
 			"Lifetime": "Scoped",
 			"Properties": {
 				"Group": "RouteWorkflow",
@@ -134,7 +134,7 @@
 		},
 		{
 			"ServiceType": "<IWorkflowItem>",
-			"ImplementationType": "HERE.GpsSimulator.CaclulateRemainingStep, HERE.GpsSimulator",
+			"ImplementationType": "HERE.GpsSimulator.CalculateRemainingStep, HERE.GpsSimulator",
 			"Lifetime": "Scoped",
 			"Properties": {
 				"Group": "RouteWorkflow",

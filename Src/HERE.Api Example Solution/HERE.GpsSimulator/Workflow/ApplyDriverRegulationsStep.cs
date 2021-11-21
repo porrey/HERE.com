@@ -1,9 +1,10 @@
-﻿using Diamond.Core.Workflow;
+﻿using System.CommandLine.Rendering;
+using Diamond.Core.Workflow;
 using Microsoft.Extensions.Logging;
 
 namespace HERE.GpsSimulator
 {
-	public class ApplyDriverRegulationsStep : WorkflowItem
+	public class ApplyDriverRegulationsStep : TemplateWorkflowStep
 	{
 		public ApplyDriverRegulationsStep(ILogger<ApplyDriverRegulationsStep> logger)
 			: base(logger)
@@ -26,17 +27,20 @@ namespace HERE.GpsSimulator
 
 			if (options.Regulation)
 			{
-				this.Logger.LogInformation("Apply Driver Regulations.");
+				this.Logger.LogInformation("Applying Driver Regulations.");
+				this.Render(context, $"Applying Driver Regulations.");
 
 				//
 				// Create a new list.
 				//
-				List<RoutePoint> newRoutePoints = new List<RoutePoint>();
+				List<RoutePoint> newRoutePoints = new();
 
 				//
 				// Driver time in seconds.
 				//
 				decimal driverTime = options.LastRest * 3600;
+				this.Render(context, $"\tLast Rest: {ForegroundColorSpan.White()}{StyleSpan.BoldOn()}{TimeSpan.FromSeconds((double)driverTime).ToReadableFormat()}{StyleSpan.BoldOff()}{ForegroundColorSpan.Reset()}");
+
 				bool thirtyMinuteRest = false;
 				bool tenHourReast = false;
 
@@ -78,9 +82,14 @@ namespace HERE.GpsSimulator
 				//
 				// Add the new points to the context.
 				//
-				this.Logger.LogInformation("Total route time has been expanded to {time}.", TimeSpan.FromSeconds((double)newRoutePoints.Sum(t => t.Duration)).ToReadableFormat());
+				string duration = TimeSpan.FromSeconds((double)newRoutePoints.Sum(t => t.Duration)).ToReadableFormat();
+
+				this.Logger.LogInformation("Total route time has been expanded to {time}.", duration);
 				context.Properties.Add(WellKnown.Context.RegulatedRoutePoints, newRoutePoints.ToArray());
 				returnValue = true;
+
+				this.Render(context, $"\tNew route duration: {StyleSpan.BoldOn()}{ForegroundColorSpan.White()}{duration}{ForegroundColorSpan.Reset()}{StyleSpan.BoldOff()}");
+				this.Render(context, $"");
 			}
 			else
 			{

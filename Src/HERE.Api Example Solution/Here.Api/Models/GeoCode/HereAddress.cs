@@ -54,9 +54,6 @@ namespace HERE.Api
 		[JsonProperty("countryName")]
 		public string CountryName { get; set; }
 
-		[JsonProperty("")]
-		public string SingleLine { get; set; }
-
 		public override string ToString()
 		{
 			string returnValue = null;

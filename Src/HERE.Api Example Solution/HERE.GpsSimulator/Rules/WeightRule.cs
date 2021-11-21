@@ -3,18 +3,18 @@ using Microsoft.Extensions.Logging;
 
 namespace HERE.GpsSimulator
 {
-	public class WeightRule : RuleTemplate<OptionsViewModel>
+	public class WeightRule : RuleTemplate<OptionsViewModel, IOptionsRuleResult>
 	{
 		public WeightRule(ILogger<WeightRule> logger)
 			: base(logger, nameof(OptionsViewModel))
 		{
 		}
 
-		protected override Task<IRuleResult> OnValidateAsync(OptionsViewModel item)
+		protected override Task<IOptionsRuleResult> OnValidateAsync(OptionsViewModel item)
 		{
-			IRuleResult returnValue = new RuleResultTemplate();
+			IOptionsRuleResult returnValue = new OptionsRuleResult();
 
-			if (item.GrossWeight > 0 && item.GrossWeight < 80000)
+			if (item.GrossWeight > 0 && item.GrossWeight <= 80000)
 			{
 				returnValue.Passed = true;
 				returnValue.ErrorMessage = null;
@@ -22,7 +22,8 @@ namespace HERE.GpsSimulator
 			else
 			{
 				returnValue.Passed = false;
-				returnValue.ErrorMessage = "Invalid Weight.";
+				returnValue.ErrorMessage = $"Value ({item.GrossWeight}) must be greater than 0 and less than or equal to 80,000.";
+				returnValue.Parameter = nameof(OptionsViewModel.GrossWeight);
 			}
 
 			return Task.FromResult(returnValue);

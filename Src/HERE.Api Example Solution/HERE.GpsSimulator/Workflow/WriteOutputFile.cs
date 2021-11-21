@@ -1,16 +1,11 @@
-﻿using System.Web;
+﻿using System.CommandLine.Rendering;
 using Diamond.Core.Workflow;
-using HERE.Api;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-#pragma warning disable CS8604
-#pragma warning disable CS8629
 
 namespace HERE.GpsSimulator
 {
-	public class WriteOutputFile : WorkflowItem
+	public class WriteOutputFile : TemplateWorkflowStep
 	{
 		public WriteOutputFile(ILogger<WriteOutputFile> logger)
 			: base(logger)
@@ -25,6 +20,9 @@ namespace HERE.GpsSimulator
 			// Get the options from the context.
 			//
 			OptionsViewModel options = context.Properties.Get<OptionsViewModel>(WellKnown.Context.Options);
+
+			this.Logger.LogInformation("Creating output file '{file}'.", options.OutputFile.FullName);
+			this.Render(context, $"Creating output file '{StyleSpan.BoldOn()}{ForegroundColorSpan.Yellow()}{options.OutputFile.FullName}{ForegroundColorSpan.Reset()}{StyleSpan.BoldOff()}'.");
 
 			//
 			// Get the route pings from the context.
@@ -47,8 +45,13 @@ namespace HERE.GpsSimulator
 			//
 			// Write the output file.
 			//
-			this.Logger.LogInformation("Writing put to '{name}'.", options.OutputFile.FullName);
+			this.Logger.LogInformation("Writing output to '{name}'.", options.OutputFile.FullName);
 			File.WriteAllText(options.OutputFile.FullName, json);
+
+			this.Logger.LogInformation("The output file was successfully created.");
+			this.Render(context, $"\tOutput file: {StyleSpan.BoldOn()}{ForegroundColorSpan.White()}Created{ForegroundColorSpan.Reset()}{StyleSpan.BoldOff()}");
+			this.Render(context, $"");
+
 			returnValue = true;
 
 			return Task.FromResult(returnValue);

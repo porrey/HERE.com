@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace HERE.GpsSimulator
 {
-	public class GetHereTokenStep : WorkflowItem
+	public class GetHereTokenStep : TemplateWorkflowStep
 	{
 		public GetHereTokenStep(ILogger<GetHereTokenStep> logger, IHereTokenFactory hereTokenFactory)
 			: base(logger)
@@ -23,24 +23,45 @@ namespace HERE.GpsSimulator
 			//
 			HereCredentials credentials = context.Properties.Get<HereCredentials>(WellKnown.Context.Credentials);
 
-			//
-			// Get a HERE token.
-			//
-			this.Logger.LogInformation("Requesting access token from HERE.");
-			HereToken? token = await this.HereTokenFactory.CreateTokenAsync(credentials);
+			try
+			{
+				//
+				// Get a HERE token.
+				//
+				this.Logger.LogInformation("Requesting access token from HERE.");
+				HereToken? token = await this.HereTokenFactory.CreateTokenAsync(credentials);
 
-			if (token != null)
-			{
-				//
-				// Save the token to the context.
-				//
-				this.Logger.LogInformation("Successfully retrieved access token.");
-				context.Properties.Set(WellKnown.Context.Token, token);
-				returnValue = true;
+				if (token != null)
+				{
+					//
+					// Save the token to the context.
+					//
+					this.Logger.LogInformation("Successfully retrieved access token.");
+					this.Render(context, $"Successfully retrieved access token.");
+					context.Properties.Set(WellKnown.Context.Token, token);
+					returnValue = true;
+				}
+				else
+				{
+					this.Render(context, $"Failed to get access token for HERE API.");
+					await this.StepFailedAsync(context, "Failed to get access token for HERE API.");
+				}
+
+				this.Render(context, $"");
 			}
-			else
+			catch (UnauthorizedAccessException)
 			{
-				await this.StepFailedAsync(context, "Failed to get access token for HERE API.");
+				this.Render(context, $"Unauthorized Access for HERE API.");
+				this.Logger.LogError($"Unauthorized Access Exception in {nameof(GetHereTokenStep)}");
+				this.Render(context, $""); 
+				await this.StepFailedAsync(context, $"Exception occurred in {nameof(GetHereTokenStep)}");
+			}
+			catch (Exception ex)
+			{
+				this.Render(context, $"Failed to get access token for HERE API.");
+				this.Logger.LogError(ex, $"Exception occurred in {nameof(GetHereTokenStep)}");
+				this.Render(context, $""); 
+				await this.StepFailedAsync(context, $"Exception occurred in {nameof(GetHereTokenStep)}");
 			}
 
 			return returnValue;

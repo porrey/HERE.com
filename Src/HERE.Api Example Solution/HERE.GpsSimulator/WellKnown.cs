@@ -4,6 +4,7 @@
 	{
 		public static class Context
 		{
+			public const string Renderer = "Renderer";
 			public const string Options = "Options";
 			public const string Credentials = "Credentials";
 			public const string Token = "Token";

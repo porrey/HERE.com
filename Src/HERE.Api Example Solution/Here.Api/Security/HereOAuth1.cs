@@ -119,7 +119,7 @@ namespace HERE.Api
 								_ => "Failed to retrieve token.",
 							};
 
-							throw new Exception(errorMessage);
+							throw new UnauthorizedAccessException(errorMessage);
 						}
 					}
 				}

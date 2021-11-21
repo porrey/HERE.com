@@ -3,18 +3,18 @@ using Microsoft.Extensions.Logging;
 
 namespace HERE.GpsSimulator
 {
-	public class TrailerCountRule : RuleTemplate<OptionsViewModel>
+	public class TrailerCountRule : RuleTemplate<OptionsViewModel, IOptionsRuleResult>
 	{
 		public TrailerCountRule(ILogger<TrailerCountRule> logger)
 			: base(logger, nameof(OptionsViewModel))
 		{
 		}
 
-		protected override Task<IRuleResult> OnValidateAsync(OptionsViewModel item)
+		protected override Task<IOptionsRuleResult> OnValidateAsync(OptionsViewModel item)
 		{
-			IRuleResult returnValue = new RuleResultTemplate();
+			IOptionsRuleResult returnValue = new OptionsRuleResult();
 
-			if (item.AxleCount > 0)
+			if (item.TrailerCount > 0)
 			{
 				returnValue.Passed = true;
 				returnValue.ErrorMessage = null;
@@ -22,7 +22,8 @@ namespace HERE.GpsSimulator
 			else
 			{
 				returnValue.Passed = false;
-				returnValue.ErrorMessage = "Invalid Axle Count.";
+				returnValue.ErrorMessage = $"Value ({item.TrailerCount}) must be greater than 0.";
+				returnValue.Parameter = nameof(OptionsViewModel.TrailerCount);
 			}
 
 			return Task.FromResult(returnValue);

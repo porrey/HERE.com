@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.CommandLine.Rendering;
+using System.Web;
 using Diamond.Core.Workflow;
 using HERE.Api;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace HERE.GpsSimulator
 {
-	public class GetRouteStep : WorkflowItem
+	public class GetRouteStep : TemplateWorkflowStep
 	{
 		public GetRouteStep(ILogger<GetRouteStep> logger, IHereTokenFactory hereTokenFactory, IHereGeoCodeService hereGeoCodeService)
 			: base(logger)
@@ -51,7 +52,7 @@ namespace HERE.GpsSimulator
 						{ "transportMode", "truck" },
 						{ "origin", $"{origin.Position.Latitude},{origin.Position.Longitude}" },
 						{ "destination", $"{destination.Position.Latitude},{destination.Position.Longitude}" },
-						{ "return", "travelSummary,polyline,routingZones" },
+						{ "return", "travelSummary,polyline,routingZones,elevation" },
 						{ "spans", "speedLimit,duration,length" },
 						{ "routingMode", options.RoutingMode.ToString() },
 						{ "lang", "en-US" },
@@ -117,8 +118,14 @@ namespace HERE.GpsSimulator
 				//
 				// Save the results to the context.
 				//
-				this.Logger.LogInformation("Total route miles are {miles}.", spans.Sum(t => t.Distance).ToString("#,###.##"));
-				this.Logger.LogInformation("Total route time is {time}.", TimeSpan.FromSeconds((double)spans.Sum(t => t.Duration)).ToReadableFormat());
+				string distance = spans.Sum(t => t.Distance).ToString("#,###.## miles");
+				string duration = TimeSpan.FromSeconds((double)spans.Sum(t => t.Duration)).ToReadableFormat();
+
+				this.Render(context, $"Route distance: {StyleSpan.BoldOn()}{ForegroundColorSpan.White()}{distance}{ForegroundColorSpan.Reset()}{StyleSpan.BoldOff()}");
+				this.Logger.LogInformation("Total route miles are {miles}.", distance);
+				this.Render(context, $"Route duration: {StyleSpan.BoldOn()}{ForegroundColorSpan.White()}{duration}{ForegroundColorSpan.Reset()}{StyleSpan.BoldOff()}");
+				this.Logger.LogInformation("Total route time is {time}.", duration);
+				this.Render(context, $"");
 
 				context.Properties.Set(WellKnown.Context.RoutePoints, points);
 				context.Properties.Set(WellKnown.Context.RouteSpans, spans);
@@ -126,6 +133,8 @@ namespace HERE.GpsSimulator
 			}
 			else
 			{
+				this.Render(context, $"Route: '{BackgroundColorSpan.Red()}{ForegroundColorSpan.White()}Could not obtain route for given parameters.{BackgroundColorSpan.Reset()}{ForegroundColorSpan.Reset()}'");
+				this.Render(context, $""); 
 				await this.StepFailedAsync(context, $"Failed to get route: [{response.StatusCode}] {response.ReasonPhrase}");
 			}
 

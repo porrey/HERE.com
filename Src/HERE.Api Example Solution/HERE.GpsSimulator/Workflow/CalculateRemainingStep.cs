@@ -3,9 +3,9 @@ using Microsoft.Extensions.Logging;
 
 namespace HERE.GpsSimulator
 {
-	public class CaclulateRemainingStep : WorkflowItem
+	public class CalculateRemainingStep : TemplateWorkflowStep
 	{
-		public CaclulateRemainingStep(ILogger<CaclulateRemainingStep> logger)
+		public CalculateRemainingStep(ILogger<CalculateRemainingStep> logger)
 			: base(logger)
 		{
 		}

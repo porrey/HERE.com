@@ -3,9 +3,9 @@ using Microsoft.Extensions.Logging;
 
 namespace HERE.GpsSimulator
 {
-	public class AxleCountRule : RuleTemplate<OptionsViewModel, IOptionsRuleResult>
+	public class LastRestRule : RuleTemplate<OptionsViewModel, IOptionsRuleResult>
 	{
-		public AxleCountRule(ILogger<AxleCountRule> logger)
+		public LastRestRule(ILogger<LastRestRule> logger)
 			: base(logger, nameof(OptionsViewModel))
 		{
 		}
@@ -14,7 +14,7 @@ namespace HERE.GpsSimulator
 		{
 			IOptionsRuleResult returnValue = new OptionsRuleResult();
 
-			if (item.AxleCount > 0)
+			if (item.LastRest > 0)
 			{
 				returnValue.Passed = true;
 				returnValue.ErrorMessage = null;
@@ -22,8 +22,8 @@ namespace HERE.GpsSimulator
 			else
 			{
 				returnValue.Passed = false;
-				returnValue.ErrorMessage = $"Value ({item.AxleCount}) must be greater than 0.";
-				returnValue.Parameter = nameof(OptionsViewModel.AxleCount);
+				returnValue.ErrorMessage = $"Value ({item.LastRest}) must be greater than 0.";
+				returnValue.Parameter = nameof(OptionsViewModel.LastRest);
 			}
 
 			return Task.FromResult(returnValue);

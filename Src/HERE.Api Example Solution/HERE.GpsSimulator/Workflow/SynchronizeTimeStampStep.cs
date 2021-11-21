@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace HERE.GpsSimulator
 {
-	public class SynchronizeTimeStampStep : WorkflowItem
+	public class SynchronizeTimeStampStep : TemplateWorkflowStep
 	{
 		public SynchronizeTimeStampStep(ILogger<SynchronizeTimeStampStep> logger)
 			: base(logger)
@@ -41,6 +41,8 @@ namespace HERE.GpsSimulator
 			// Add the new points to the context.
 			//
 			returnValue = true;
+			this.Render(context, $"Synchronization of time stamp completed.");
+			this.Render(context, $"");
 
 			return Task.FromResult(returnValue);
 		}

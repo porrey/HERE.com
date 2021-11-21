@@ -1,10 +1,11 @@
-﻿using Diamond.Core.Workflow;
+﻿using System.CommandLine.Rendering;
+using Diamond.Core.Workflow;
 using HERE.Api;
 using Microsoft.Extensions.Logging;
 
 namespace HERE.GpsSimulator
 {
-	public class ResolveDestinationPointStep : WorkflowItem
+	public class ResolveDestinationPointStep : TemplateWorkflowStep
 	{
 		public ResolveDestinationPointStep(ILogger<ResolveDestinationPointStep> logger, IHereTokenFactory hereTokenFactory, IHereGeoCodeService hereGeoCodeService)
 			: base(logger)
@@ -38,18 +39,28 @@ namespace HERE.GpsSimulator
 			//
 			// Call the HERE service.
 			//
-			(HereGeoCodeList destination, HereApiError destinationError) = await this.HereGeoCodeService.FindAddressAsync(client, options.Destination );
+			(HereGeoCodeList destinationList, HereApiError destinationError) = await this.HereGeoCodeService.FindAddressAsync(client, options.Destination );
 
 			//
 			// Check the result.
 			//
 			if (destinationError == null)
 			{
-				context.Properties.Set(WellKnown.Context.Destination, destination.Items[0]);
+				HereGeoCodeItem destination = destinationList.Items[0];
+
+				this.Render(context, $"destination: '{ForegroundColorSpan.Yellow()}{StyleSpan.BoldOn()}{options.Destination}{StyleSpan.BoldOff()}{ForegroundColorSpan.Reset()}':");
+				this.Render(context, $"\tID                  : {ForegroundColorSpan.White()}{StyleSpan.BoldOn()}{destination.Id}{StyleSpan.BoldOff()}{ForegroundColorSpan.Reset()}");
+				this.Render(context, $"\tGEO Coordinates     : {ForegroundColorSpan.White()}{StyleSpan.BoldOn()}Latitude = {destination.Position.Latitude}, Longitude = {destination.Position.Longitude}, Elevation = {destination.Position.Elevation}{StyleSpan.BoldOff()}{ForegroundColorSpan.Reset()}");
+				this.Render(context, $"\tStandardized Address: {ForegroundColorSpan.White()}{StyleSpan.BoldOn()}{destination.Address.Label.ToUpper()}{StyleSpan.BoldOff()}{ForegroundColorSpan.Reset()}");
+				this.Render(context, $"");
+
+				context.Properties.Set(WellKnown.Context.Destination, destination);
 				returnValue = true;
 			}
 			else
 			{
+				this.Render(context, $"Invalid destination address: '{BackgroundColorSpan.Red()}{ForegroundColorSpan.White()}{destinationError}{BackgroundColorSpan.Reset()}{ForegroundColorSpan.Reset()}'");
+				this.Render(context, $""); 
 				await this.StepFailedAsync(context, $"Destination error: '{destinationError}'.");
 			}
 
