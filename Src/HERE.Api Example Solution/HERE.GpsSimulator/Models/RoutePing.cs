@@ -2,15 +2,18 @@
 {
 	public class RoutePing
 	{
-		public int Id { get; set; }
-		public double Latitude { get; set; }
-		public double Longitude { get; set; }
+		public int Id { get; set; } = 0;
+		public double Latitude { get; set; } = 0.0;
+		public double Longitude { get; set; } = 0.0;
 		public DateTimeOffset Timestamp { get; set; }
-		public TimeSpan Duration { get; set; }
-		public decimal Distance { get; set; }
-		public decimal ElapsedMiles { get; set; }
-		public TimeSpan ElapsedTime { get; set; }
-		public TimeSpan RemainingTime { get; set; }
-		public decimal RemainingMiles { get; set; }
+		public TimeSpan Duration { get; set; } = TimeSpan.Zero;
+		public decimal Distance { get; set; } = 0M;
+		public decimal ElapsedMiles { get; set; } = 0M;
+		public TimeSpan ElapsedTime { get; set; } = TimeSpan.Zero;
+		public TimeSpan RemainingTime { get; set; } = TimeSpan.Zero;
+		public decimal RemainingMiles { get; set; } = 0M;
+		public string Reference1 { get; set; } = "";
+		public string Reference2 { get; set; } = "";
+		public string Reference3 { get; set; } = "";
 	}
 }

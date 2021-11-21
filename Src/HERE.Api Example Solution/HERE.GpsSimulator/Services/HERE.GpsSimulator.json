@@ -125,7 +125,7 @@
 		},
 		{
 			"ServiceType": "<IWorkflowItem>",
-			"ImplementationType": "HERE.GpsSimulator.CreateGpsPointsStep, HERE.GpsSimulator",
+			"ImplementationType": "HERE.GpsSimulator.CreateGpsPingsStep, HERE.GpsSimulator",
 			"Lifetime": "Scoped",
 			"Properties": {
 				"Group": "RouteWorkflow",

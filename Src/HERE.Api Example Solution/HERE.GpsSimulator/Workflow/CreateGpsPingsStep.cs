@@ -4,9 +4,9 @@ using Microsoft.Extensions.Logging;
 
 namespace HERE.GpsSimulator
 {
-	public class CreateGpsPointsStep : TemplateWorkflowStep
+	public class CreateGpsPingsStep : TemplateWorkflowStep
 	{
-		public CreateGpsPointsStep(ILogger<CreateGpsPointsStep> logger)
+		public CreateGpsPingsStep(ILogger<CreateGpsPingsStep> logger)
 			: base(logger)
 		{
 		}
@@ -47,7 +47,10 @@ namespace HERE.GpsSimulator
 				Latitude = routePoints[0].Latitude,
 				Longitude = routePoints[0].Longitude,
 				Timestamp = options.DepartureTime,
-				ElapsedMiles = 0
+				ElapsedMiles = 0,
+				Reference1 = options.Reference1,
+				Reference2 = options.Reference2,
+				Reference3 = options.Reference3
 			});
 
 			//
@@ -103,6 +106,9 @@ namespace HERE.GpsSimulator
 						Distance = accumlativeMiles,
 						ElapsedMiles = elapsedMiles,
 						ElapsedTime = TimeSpan.FromSeconds((double)elapsedTime),
+						Reference1 = options.Reference1,
+						Reference2 = options.Reference2,
+						Reference3 = options.Reference3
 					});
 
 					//
