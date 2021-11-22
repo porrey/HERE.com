@@ -14,7 +14,7 @@ namespace HERE.GpsSimulator
 		{
 			IOptionsRuleResult returnValue = new OptionsRuleResult();
 
-			if (item.LastRest > 0)
+			if (item.LastRest >= 0)
 			{
 				returnValue.Passed = true;
 				returnValue.ErrorMessage = null;
@@ -22,7 +22,7 @@ namespace HERE.GpsSimulator
 			else
 			{
 				returnValue.Passed = false;
-				returnValue.ErrorMessage = $"Value ({item.LastRest}) must be greater than 0.";
+				returnValue.ErrorMessage = $"Value ({item.LastRest}) must be greater than or equal to 0.";
 				returnValue.Parameter = nameof(OptionsViewModel.LastRest);
 			}
 
