@@ -3,8 +3,9 @@
 	public class RoutePing
 	{
 		public int Id { get; set; } = 0;
-		public double Latitude { get; set; } = 0.0;
-		public double Longitude { get; set; } = 0.0;
+		public decimal Latitude { get; set; } = 0.0M;
+		public decimal Longitude { get; set; } = 0.0M;
+		public decimal Elevation { get; set; } = 0.0M;
 		public DateTimeOffset Timestamp { get; set; }
 		public TimeSpan Duration { get; set; } = TimeSpan.Zero;
 		public decimal Distance { get; set; } = 0M;

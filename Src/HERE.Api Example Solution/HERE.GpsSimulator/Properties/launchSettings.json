@@ -2,7 +2,7 @@
   "profiles": {
     "HERE.GpsSimulator": {
       "commandName": "Project",
-      "commandLineArgs": "[output:ansi]  generate --origin \"600 E Grand Avenue, Chicago IL\" --destination \"1300 Fox St Denver CO 80204\" --departuretime \"11/21/2021 11:00 AM\" --grossweight 75000 --interval 00:15:00 --axlecount 5 --trailercount 1 --trucktype tractor --routingmode short --regulation true --lastrest 2 --outputfile \"%USERPROFILE%/Desktop/gps-data.json\" --reference1 \"TRK12345\" --reference2 \"APPT000110\" --reference3 \"ABC123\"",
+      "commandLineArgs": "[output:ansi]  generate --origin \"1000 WINDHAM PARKWAY BOLINGBROOK IL\" --destination \"7540 E 53RD PL, DENVER, CO 80266-0001\" --departuretime \"11/21/2021 11:00 AM\" --grossweight 75000 --interval 00:15:00 --axlecount 5 --trailercount 1 --trucktype tractor --routingmode short --regulation true --lastrest 0 --outputfile \"%USERPROFILE%/Desktop/EZ17853-1-gps-data.json\" --reference1 \"106385000\" --reference2 \"127392207\" --reference3 \"EZ17853\"",
       "environmentVariables": {
         "LOG_FOLDER": "%TEMP%"
       }

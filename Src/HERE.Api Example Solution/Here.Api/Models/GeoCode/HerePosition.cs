@@ -34,7 +34,7 @@ namespace HERE.Api
 			Elevation = 0;
 		}
 
-		public HerePosition(double latitude, double longitude, double elevation = 0)
+		public HerePosition(decimal latitude, decimal longitude, decimal elevation = 0)
 		{
 			Latitude = latitude;
 			Longitude = longitude;
@@ -42,13 +42,13 @@ namespace HERE.Api
 		}
 
 		[JsonProperty("lat")]
-		public double Latitude { get; set; }
+		public decimal Latitude { get; set; }
 
 		[JsonProperty("lng")]
-		public double Longitude { get; set; }
+		public decimal Longitude { get; set; }
 
 		[JsonProperty("elevation")]
-		public double Elevation { get; }
+		public decimal Elevation { get; }
 
 		public override string ToString()
 		{

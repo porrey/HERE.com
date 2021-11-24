@@ -100,6 +100,7 @@ namespace HERE.GpsSimulator
 												  {
 													  Latitude = tbl.Latitude,
 													  Longitude = tbl.Longitude,
+													  Elevation = tbl.Elevation,
 													  Distance = (decimal)0,
 													  Duration = 0
 												  }).ToArray();
@@ -134,7 +135,7 @@ namespace HERE.GpsSimulator
 			else
 			{
 				this.Render(context, $"Route: '{BackgroundColorSpan.Red()}{ForegroundColorSpan.White()}Could not obtain route for given parameters.{BackgroundColorSpan.Reset()}{ForegroundColorSpan.Reset()}'");
-				this.Render(context, $""); 
+				this.Render(context, $"");
 				await this.StepFailedAsync(context, $"Failed to get route: [{response.StatusCode}] {response.ReasonPhrase}");
 			}
 
