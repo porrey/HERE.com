@@ -100,6 +100,7 @@ namespace HERE.GpsSimulator
 													  {
 														  Latitude = tbl.Latitude,
 														  Longitude = tbl.Longitude,
+														  Elevation = tbl.Elevation,
 														  Distance = (decimal)0,
 														  Duration = 0
 													  }).ToArray();
