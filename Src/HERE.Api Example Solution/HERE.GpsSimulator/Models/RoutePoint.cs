@@ -2,8 +2,9 @@
 {
 	public class RoutePoint
 	{
-		public double Latitude { get; set; }
-		public double Longitude { get; set; }
+		public decimal Latitude { get; set; }
+		public decimal Longitude { get; set; }
+		public decimal Elevation { get; set; }
 		public decimal Distance { get; set; }
 		public decimal Duration { get; set; }
 		public double? SpeedLimit { get; set; }

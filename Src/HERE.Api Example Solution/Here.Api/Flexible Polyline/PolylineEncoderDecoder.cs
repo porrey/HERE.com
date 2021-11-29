@@ -68,12 +68,12 @@ namespace HERE.Api
                 throw new ArgumentException("Invalid argument!", nameof(encoded));
             }
 
-            List<HerePosition> result = new List<HerePosition>();
+            List<HerePosition> result = new();
             Decoder dec = new Decoder(encoded);
 
-            double lat = 0;
-            double lng = 0;
-            double z = 0;
+            decimal lat = 0;
+            decimal lng = 0;
+            decimal z = 0;
 
             while (dec.DecodeOne(ref lat, ref lng, ref z))
             {
@@ -147,13 +147,13 @@ namespace HERE.Api
                 Converter.EncodeUnsignedVarint(res, _result);
             }
 
-            private void Add(double lat, double lng)
+            private void Add(decimal lat, decimal lng)
             {
                 _latConverter.EncodeValue(lat, _result);
                 _lngConverter.EncodeValue(lng, _result);
             }
 
-            private void Add(double lat, double lng, double z)
+            private void Add(decimal lat, decimal lng, decimal z)
             {
                 Add(lat, lng);
                 if (_thirdDimension != ThirdDimension.Absent)
@@ -245,9 +245,9 @@ namespace HERE.Api
 
 
             public bool DecodeOne(
-                ref double lat,
-                ref double lng,
-                ref double z)
+                ref decimal lat,
+                ref decimal lng,
+                ref decimal z)
             {
                 if (_index == _encoded.Length)
                 {
@@ -321,7 +321,7 @@ namespace HERE.Api
                 result.Append(ENCODING_TABLE[(byte)value]);
             }
 
-            public void EncodeValue(double value, StringBuilder result)
+            public void EncodeValue(decimal value, StringBuilder result)
             {
                 /*
 				 * Round-half-up
@@ -386,7 +386,7 @@ namespace HERE.Api
             //Decode single coordinate (say lat|lng|z) starting at index
             public bool DecodeValue(char[] encoded,
                 ref int index,
-                ref double coordinate)
+                ref decimal coordinate)
             {
                 long delta = 0;
                 if (!DecodeUnsignedVarint(encoded, ref index, ref delta))
@@ -401,7 +401,7 @@ namespace HERE.Api
 
                 delta >>= 1;
                 _lastValue += delta;
-                coordinate = (double)_lastValue / _multiplier;
+                coordinate = (decimal)_lastValue / _multiplier;
                 return true;
             }
         }

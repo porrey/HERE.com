@@ -116,6 +116,7 @@ namespace HERE.GpsSimulator
 					Distance = 0,
 					Latitude = baseRoutePoint.Latitude,
 					Longitude = baseRoutePoint.Longitude,
+					Elevation = baseRoutePoint.Elevation,
 					Duration = baseRoutePoint.Duration,
 					SpeedLimit = 0
 				});
