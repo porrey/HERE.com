@@ -34,7 +34,7 @@ namespace HERE.GpsSimulator
 			//
 			// Create a client.
 			//
-			HereHttpClient client = this.HereTokenFactory.CreateHttpClient(token);
+			using HereHttpClient client = this.HereTokenFactory.CreateHttpClient(token);
 
 			//
 			// Get the options from the context.
@@ -73,69 +73,70 @@ namespace HERE.GpsSimulator
 			// Make the API call.
 			//
 			this.Logger.LogInformation("Requesting route from HERE API.");
-			HttpResponseMessage response = await client.GetAsync($"https://router.hereapi.com/v8/routes?{query}");
-
-			//
-			// Get the response content.
-			//
-			string responseContent = await response.Content.ReadAsStringAsync();
-
-			if (response.IsSuccessStatusCode)
+			using (HttpResponseMessage response = await client.GetAsync($"https://router.hereapi.com/v8/routes?{query}"))
 			{
 				//
-				// Deserialize the response.
+				// Get the response content.
 				//
-				dynamic item = JObject.Parse(responseContent);
+				string responseContent = await response.Content.ReadAsStringAsync();
 
-				//
-				// get the encoded polyline string.
-				//
-				string polyline = item.routes[0].sections[0].polyline;
+				if (response.IsSuccessStatusCode)
+				{
+					//
+					// Deserialize the response.
+					//
+					dynamic item = JObject.Parse(responseContent);
 
-				//
-				// Decode the polyline into geo coordinates.
-				//
-				IEnumerable<RoutePoint> points = (from tbl in PolylineEncoderDecoder.Decode(polyline)
-												  select new RoutePoint()
-												  {
-													  Latitude = tbl.Latitude,
-													  Longitude = tbl.Longitude,
-													  Distance = (decimal)0,
-													  Duration = 0
-												  }).ToArray();
+					//
+					// get the encoded polyline string.
+					//
+					string polyline = item.routes[0].sections[0].polyline;
 
-				//
-				// Get the spans with speed limits.
-				//
-				IEnumerable<RouteSpan> spans = (from tbl in (JArray)item.routes[0].sections[0].spans
-												select new RouteSpan()
-												{
-													Offset = tbl["offset"].Value<int>(),
-													SpeedLimit = tbl["speedLimit"] != null ? Math.Round(tbl["speedLimit"].Value<double?>().Value * 2.23693629, 0) : (double?)null,
-													Distance = tbl["length"].Value<decimal>() / 1609.344M,
-													Duration = tbl["duration"].Value<decimal>()
-												}).ToArray();
-				//
-				// Save the results to the context.
-				//
-				string distance = spans.Sum(t => t.Distance).ToString("#,###.## miles");
-				string duration = TimeSpan.FromSeconds((double)spans.Sum(t => t.Duration)).ToReadableFormat();
+					//
+					// Decode the polyline into geo coordinates.
+					//
+					IEnumerable<RoutePoint> points = (from tbl in PolylineEncoderDecoder.Decode(polyline)
+													  select new RoutePoint()
+													  {
+														  Latitude = tbl.Latitude,
+														  Longitude = tbl.Longitude,
+														  Distance = (decimal)0,
+														  Duration = 0
+													  }).ToArray();
 
-				this.Render(context, $"Route distance: {StyleSpan.BoldOn()}{ForegroundColorSpan.White()}{distance}{ForegroundColorSpan.Reset()}{StyleSpan.BoldOff()}");
-				this.Logger.LogInformation("Total route miles are {miles}.", distance);
-				this.Render(context, $"Route duration: {StyleSpan.BoldOn()}{ForegroundColorSpan.White()}{duration}{ForegroundColorSpan.Reset()}{StyleSpan.BoldOff()}");
-				this.Logger.LogInformation("Total route time is {time}.", duration);
-				this.Render(context, $"");
+					//
+					// Get the spans with speed limits.
+					//
+					IEnumerable<RouteSpan> spans = (from tbl in (JArray)item.routes[0].sections[0].spans
+													select new RouteSpan()
+													{
+														Offset = tbl["offset"].Value<int>(),
+														SpeedLimit = tbl["speedLimit"] != null ? Math.Round(tbl["speedLimit"].Value<double?>().Value * 2.23693629, 0) : (double?)null,
+														Distance = tbl["length"].Value<decimal>() / 1609.344M,
+														Duration = tbl["duration"].Value<decimal>()
+													}).ToArray();
+					//
+					// Save the results to the context.
+					//
+					string distance = spans.Sum(t => t.Distance).ToString("#,###.## miles");
+					string duration = TimeSpan.FromSeconds((double)spans.Sum(t => t.Duration)).ToReadableFormat();
 
-				context.Properties.Set(WellKnown.Context.RoutePoints, points);
-				context.Properties.Set(WellKnown.Context.RouteSpans, spans);
-				returnValue = true;
-			}
-			else
-			{
-				this.Render(context, $"Route: '{BackgroundColorSpan.Red()}{ForegroundColorSpan.White()}Could not obtain route for given parameters.{BackgroundColorSpan.Reset()}{ForegroundColorSpan.Reset()}'");
-				this.Render(context, $""); 
-				await this.StepFailedAsync(context, $"Failed to get route: [{response.StatusCode}] {response.ReasonPhrase}");
+					this.Render(context, $"Route distance: {StyleSpan.BoldOn()}{ForegroundColorSpan.White()}{distance}{ForegroundColorSpan.Reset()}{StyleSpan.BoldOff()}");
+					this.Logger.LogInformation("Total route miles are {miles}.", distance);
+					this.Render(context, $"Route duration: {StyleSpan.BoldOn()}{ForegroundColorSpan.White()}{duration}{ForegroundColorSpan.Reset()}{StyleSpan.BoldOff()}");
+					this.Logger.LogInformation("Total route time is {time}.", duration);
+					this.Render(context, $"");
+
+					context.Properties.Set(WellKnown.Context.RoutePoints, points);
+					context.Properties.Set(WellKnown.Context.RouteSpans, spans);
+					returnValue = true;
+				}
+				else
+				{
+					this.Render(context, $"Route: '{BackgroundColorSpan.Red()}{ForegroundColorSpan.White()}Could not obtain route for given parameters.{BackgroundColorSpan.Reset()}{ForegroundColorSpan.Reset()}'");
+					this.Render(context, $"");
+					await this.StepFailedAsync(context, $"Failed to get route: [{response.StatusCode}] {response.ReasonPhrase}");
+				}
 			}
 
 			return returnValue;
