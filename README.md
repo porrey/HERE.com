@@ -1,3 +1,6 @@
+[![Nuget](https://img.shields.io/nuget/v/HERE.Api?label=HERE.Api%20-%20NuGet&style=for-the-badge)
+![Nuget](https://img.shields.io/nuget/dt/HERE.Api?label=Downloads&style=for-the-badge)](https://www.nuget.org/packages/HERE.Api/)
+
 ![](https://github.com/porrey/HERE.com/raw/main/Images/logo.png)
 
 ## HERE.GpsSimulator
