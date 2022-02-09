@@ -47,7 +47,8 @@ namespace HERE.Api
 			//
 			// Make and API call.
 			//
-			string uri = $"{this.BaseUrl}?qq={address}";
+			string uri = $"{this.BaseUrl}?qq={address}&show=tz,countryInfo";
+			
 			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{
 				string json = await response.Content.ReadAsStringAsync();

@@ -46,5 +46,11 @@ namespace HERE.Api
 
 		[JsonProperty("access")]
 		public HerePosition[] Access { get; set; }
+
+		[JsonProperty("timeZone")]
+		public HereTimeZone TimeZone { get; set; }
+
+		[JsonProperty("countryInfo")]
+		public HereCountryInfo CountryInfo { get; set; }
 	}
 }
