@@ -4,7 +4,7 @@
 ![](https://github.com/porrey/HERE.com/raw/main/Images/logo.png)
 
 ## HERE.GpsSimulator
-The example code demonstrates how to use the HERE API to create a route between two points and then simulate GPS pings along the route and a specified interval. The output is written to a JSON file. The code sample is written for truck routing but can be esily adapted for other modes of transportation.
+The example code demonstrates how to use the HERE API to create a route between two points and then simulate GPS pings along the route and a specified interval. The output is written to a JSON file. The code sample is written for truck routing but can be easily adapted for other modes of transportation.
 
 Example command line:
 
