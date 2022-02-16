@@ -27,7 +27,7 @@ Type `HERE.GpsSimulator -h` for parameter info. You will get the output shown be
 	Commands:
   		generate  Generates GPS pings from a specified origin point to a destination point.
   
-For specific command help, type `HERE.GpsSimulator -h [command]`. For example, `1 gives the output shown below.
+For specific command help, type `HERE.GpsSimulator -h [command]`. For example, `-h generate` gives the output shown below.
 
 	generate
 	  Generates GPS pings from a speified origin point to a destination point.
