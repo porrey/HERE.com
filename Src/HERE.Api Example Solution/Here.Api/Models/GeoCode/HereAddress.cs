@@ -39,6 +39,9 @@ namespace HERE.Api
 		[JsonProperty("state")]
 		public string State { get; set; }
 
+		[JsonProperty("stateCode")]
+		public string StateCode { get; set; }
+
 		[JsonProperty("postalCode")]
 		public string PostalCode { get; set; }
 
