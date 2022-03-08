@@ -48,7 +48,7 @@ namespace HERE.Api
 			//
 			// Make and API call.
 			//
-			string uri = $"{this.BaseUrl}?qq={address}&show=tz,countryInfo";
+			string uri = $"{this.BaseUrl}?qq={Uri.EscapeDataString(address.ToString())}&show=tz,countryInfo";
 
 			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{

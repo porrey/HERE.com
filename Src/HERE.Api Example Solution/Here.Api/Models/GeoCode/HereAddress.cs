@@ -73,9 +73,9 @@ namespace HERE.Api
 				items.Add($"city={this.City}");
 			}
 
-			if (!string.IsNullOrWhiteSpace(this.State))
+			if (!string.IsNullOrWhiteSpace(this.StateCode))
 			{
-				items.Add($"state={this.State}");
+				items.Add($"state={this.StateCode}");
 			}
 
 			if (!string.IsNullOrWhiteSpace(this.PostalCode))
