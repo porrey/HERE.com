@@ -23,7 +23,6 @@
 namespace HERE.Api
 {
 	public static class Api
-	{
-		
+	{	
 	}
 }

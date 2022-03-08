@@ -43,5 +43,7 @@ namespace HERE.Api
 
 		[JsonProperty("requestId")]
 		public string RequestId { get; set; }
+
+		public string JsonResponseText { get; set; }
 	}
 }

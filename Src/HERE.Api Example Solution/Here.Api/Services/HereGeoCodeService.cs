@@ -21,6 +21,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -48,18 +49,32 @@ namespace HERE.Api
 			// Make and API call.
 			//
 			string uri = $"{this.BaseUrl}?qq={address}&show=tz,countryInfo";
-			
+
 			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{
 				string json = await response.Content.ReadAsStringAsync();
 
-				if (response.IsSuccessStatusCode)
+				try
 				{
-					addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(json);
+					if (response.IsSuccessStatusCode)
+					{
+						addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(json);
+					}
+					else
+					{
+						error = JsonConvert.DeserializeObject<HereApiError>(json);
+						error.JsonResponseText = json;
+					}
 				}
-				else
+				catch (Exception ex)
 				{
-					error = JsonConvert.DeserializeObject<HereApiError>(json);
+					error = new HereApiError()
+					{
+						Cause = ex.Message,
+						HttpStatusCode = 500,
+						JsonResponseText = json,
+						Title = "Exception"
+					};
 				}
 			}
 
@@ -85,6 +100,7 @@ namespace HERE.Api
 				else
 				{
 					error = JsonConvert.DeserializeObject<HereApiError>(json);
+					error.JsonResponseText = json;
 				}
 			}
 
