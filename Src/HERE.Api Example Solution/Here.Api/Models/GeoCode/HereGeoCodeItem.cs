@@ -52,5 +52,11 @@ namespace HERE.Api
 
 		[JsonProperty("countryInfo")]
 		public HereCountryInfo CountryInfo { get; set; }
+
+		[JsonProperty("scoring")]
+		public HereScoring Scoring { get; set; }
+
+		[JsonProperty("mapView")]
+		public HereMapView MapView { get; set; }
 	}
 }

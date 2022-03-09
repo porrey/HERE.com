@@ -27,6 +27,9 @@ using System.Threading.Tasks;
 
 namespace HERE.Api
 {
+	/// <summary>
+	/// Documentation: https://developer.here.com/documentation/geocoding-search-api/api-reference-swagger.html
+	/// </summary>
 	public class HereGeoCodeService : IHereGeoCodeService
 	{
 		public HereGeoCodeService()
@@ -41,14 +44,21 @@ namespace HERE.Api
 
 		protected string BaseUrl { get; set; }
 
-		public async Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, HereAddress address)
+		/// <summary>
+		/// Uses the structured request format qq=.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="address"></param>
+		/// <param name="limit"></param>
+		/// <returns></returns>
+		public async Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, HereAddress address, int limit = 20)
 		{
 			(HereGeoCodeList addressResponse, HereApiError error) = (null, null);
 
 			//
 			// Make and API call.
 			//
-			string uri = $"{this.BaseUrl}?qq={Uri.EscapeDataString(address.ToString())}&show=tz,countryInfo";
+			string uri = $"{this.BaseUrl}?qq={Uri.EscapeDataString(address.ToString())}&show=tz,countryInfo&limit={limit}";
 
 			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{
@@ -81,14 +91,22 @@ namespace HERE.Api
 			return (addressResponse, error);
 		}
 
-		public async Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, string address)
+		/// <summary>
+		/// Uses the unstructured request format q=.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="address"></param>
+		/// <param name="limit"></param>
+		/// <returns></returns>
+		public async Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, string address, int limit = 20)
 		{
 			(HereGeoCodeList addressResponse, HereApiError error) = (null, null);
 
 			//
 			// Make and API call.
 			//
-			string uri = $"{this.BaseUrl}?q={address}";
+			string uri = $"{this.BaseUrl}?q={Uri.EscapeDataString(address)}&show=tz,countryInfo&limit={limit}";
+
 			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{
 				string json = await response.Content.ReadAsStringAsync();

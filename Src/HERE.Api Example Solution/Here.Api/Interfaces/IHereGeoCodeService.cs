@@ -27,7 +27,7 @@ namespace HERE.Api
 {
 	public interface IHereGeoCodeService
 	{
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, HereAddress address);
-		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, string address);
+		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, HereAddress address, int limit = 20);
+		Task<(HereGeoCodeList, HereApiError)> FindAddressAsync(HttpClient client, string address, int limit = 20);
 	}
 }

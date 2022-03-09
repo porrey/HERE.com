@@ -75,6 +75,9 @@ namespace HERE.Api
 
 			if (!string.IsNullOrWhiteSpace(this.StateCode))
 			{
+				//
+				// The paramter is state nd not stateCode.
+				//
 				items.Add($"state={this.StateCode}");
 			}
 
