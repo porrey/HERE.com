@@ -32,7 +32,7 @@ namespace HERE.Api.Example
 			// Go to your project at here.com and create OAuth 2.0 (JSON Web Tokens) credentials. This will prompt you
 			// to download a file named credentials.properties. Copy it to this project folder.
 			//
-			HereCredentials credentials = HereCredentials.FromFile("./credentials.properties");
+			HereCredentials credentials = HereCredentials.FromFile("./here.credentials.properties");
 			IHereTokenFactory hereTokenFactory = new HereTokenFactory();
 			HereToken token = await hereTokenFactory.CreateTokenAsync(credentials);
 

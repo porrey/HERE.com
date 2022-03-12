@@ -16,7 +16,7 @@ namespace HERE.GpsSimulator
 		{
 			bool returnValue = false;
 
-			FileInfo file = new("./credentials.properties");
+			FileInfo file = new("./here.credentials.properties");
 
 			try
 			{
