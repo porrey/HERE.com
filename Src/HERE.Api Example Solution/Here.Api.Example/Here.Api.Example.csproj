@@ -9,11 +9,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="credentials.properties" />
+		<None Remove="here.credentials.properties" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="credentials.properties">
+		<Content Include="here.credentials.properties">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

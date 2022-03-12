@@ -13,7 +13,7 @@
 
 	<ItemGroup>
 	  <None Remove="appsettings.json" />
-	  <None Remove="credentials.properties" />
+	  <None Remove="here.credentials.properties" />
 	  <None Remove="Services\Diamond.Core.json" />
 	  <None Remove="Services\HERE.Api.json" />
 	  <None Remove="Services\HERE.GpsSimulator.json" />
@@ -23,7 +23,7 @@
 	  <Content Include="appsettings.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
-	  <Content Include="credentials.properties">
+	  <Content Include="here.credentials.properties">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="Services\Diamond.Core.json">
