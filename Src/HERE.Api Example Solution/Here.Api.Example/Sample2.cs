@@ -40,7 +40,8 @@ namespace HERE.Api.Example
 			{
 				Street = "600 E. Grand Avenue",
 				City = "Chicago",
-				State = "IL"
+				StateCode = "IL",
+				PostalCode = "60611-3419"
 			});
 
 			if (error == null)
