@@ -62,18 +62,18 @@ namespace HERE.Api
 
 			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{
-				string json = await response.Content.ReadAsStringAsync();
+				addressResponse.JsonResponse = await response.Content.ReadAsStringAsync();
 
 				try
 				{
 					if (response.IsSuccessStatusCode)
 					{
-						addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(json);
+						addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(addressResponse.JsonResponse);
 					}
 					else
 					{
-						error = JsonConvert.DeserializeObject<HereApiError>(json);
-						error.JsonResponseText = json;
+						error = JsonConvert.DeserializeObject<HereApiError>(addressResponse.JsonResponse);
+						error.JsonResponseText = addressResponse.JsonResponse;
 					}
 				}
 				catch (Exception ex)
@@ -82,7 +82,7 @@ namespace HERE.Api
 					{
 						Cause = ex.Message,
 						HttpStatusCode = 500,
-						JsonResponseText = json,
+						JsonResponseText = addressResponse.JsonResponse,
 						Title = "Exception"
 					};
 				}
@@ -109,16 +109,29 @@ namespace HERE.Api
 
 			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{
-				string json = await response.Content.ReadAsStringAsync();
+				addressResponse.JsonResponse = await response.Content.ReadAsStringAsync();
 
-				if (response.IsSuccessStatusCode)
+				try
 				{
-					addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(json);
+					if (response.IsSuccessStatusCode)
+					{
+						addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(addressResponse.JsonResponse);
+					}
+					else
+					{
+						error = JsonConvert.DeserializeObject<HereApiError>(addressResponse.JsonResponse);
+						error.JsonResponseText = addressResponse.JsonResponse;
+					}
 				}
-				else
+				catch (Exception ex)
 				{
-					error = JsonConvert.DeserializeObject<HereApiError>(json);
-					error.JsonResponseText = json;
+					error = new HereApiError()
+					{
+						Cause = ex.Message,
+						HttpStatusCode = 500,
+						JsonResponseText = addressResponse.JsonResponse,
+						Title = "Exception"
+					};
 				}
 			}
 
