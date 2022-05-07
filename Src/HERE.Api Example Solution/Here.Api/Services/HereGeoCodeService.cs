@@ -58,22 +58,23 @@ namespace HERE.Api
 			//
 			// Make and API call.
 			//
-			string uri = $"{this.BaseUrl}?qq={Uri.EscapeDataString(address.ToString())}&show=tz,countryInfo&limit={limit}";
+			string uri = $"{this.BaseUrl}?qq={Uri.EscapeDataString(address.ToString())}&show=tz,countryInfo,parsing&limit={limit}";
 
 			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{
-				addressResponse.JsonResponse = await response.Content.ReadAsStringAsync();
+				string json = await response.Content.ReadAsStringAsync();
 
 				try
 				{
 					if (response.IsSuccessStatusCode)
 					{
-						addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(addressResponse.JsonResponse);
+						addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(json);
+						addressResponse.JsonResponse = json;
 					}
 					else
 					{
-						error = JsonConvert.DeserializeObject<HereApiError>(addressResponse.JsonResponse);
-						error.JsonResponseText = addressResponse.JsonResponse;
+						error = JsonConvert.DeserializeObject<HereApiError>(json);
+						error.JsonResponseText = json;
 					}
 				}
 				catch (Exception ex)
@@ -82,7 +83,7 @@ namespace HERE.Api
 					{
 						Cause = ex.Message,
 						HttpStatusCode = 500,
-						JsonResponseText = addressResponse.JsonResponse,
+						JsonResponseText = json,
 						Title = "Exception"
 					};
 				}
@@ -105,22 +106,23 @@ namespace HERE.Api
 			//
 			// Make and API call.
 			//
-			string uri = $"{this.BaseUrl}?q={Uri.EscapeDataString(address)}&show=tz,countryInfo&limit={limit}";
+			string uri = $"{this.BaseUrl}?q={Uri.EscapeDataString(address)}&show=tz,countryInfo,parsing&limit={limit}";
 
 			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{
-				addressResponse.JsonResponse = await response.Content.ReadAsStringAsync();
+				string json = await response.Content.ReadAsStringAsync();
 
 				try
 				{
 					if (response.IsSuccessStatusCode)
 					{
-						addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(addressResponse.JsonResponse);
+						addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(json);
+						addressResponse.JsonResponse = json;
 					}
 					else
 					{
-						error = JsonConvert.DeserializeObject<HereApiError>(addressResponse.JsonResponse);
-						error.JsonResponseText = addressResponse.JsonResponse;
+						error = JsonConvert.DeserializeObject<HereApiError>(json);
+						error.JsonResponseText = json;
 					}
 				}
 				catch (Exception ex)
@@ -129,7 +131,7 @@ namespace HERE.Api
 					{
 						Cause = ex.Message,
 						HttpStatusCode = 500,
-						JsonResponseText = addressResponse.JsonResponse,
+						JsonResponseText = json,
 						Title = "Exception"
 					};
 				}
