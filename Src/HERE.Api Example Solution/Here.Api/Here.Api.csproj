@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<Version>6.0.9</Version>
-		<FileVersion>6.0.9</FileVersion>
-		<AssemblyVersion>6.0.9</AssemblyVersion>
+		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+		<Version>7.0.0</Version>
+		<FileVersion>7.0.0</FileVersion>
+		<AssemblyVersion>7.0.0</AssemblyVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Description>Provides OAuth 1 authorization for the HERE.com REST API.</Description>
 		<Copyright>Copyright (c) 2021-2022 Daniel Porrey</Copyright>
