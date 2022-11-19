@@ -58,7 +58,7 @@ namespace HERE.Api
 			//
 			// Make and API call.
 			//
-			string uri = $"{this.BaseUrl}?qq={Uri.EscapeDataString(address.ToString())}&show=tz,countryInfo,parsing&limit={limit}";
+			string uri = $"{this.BaseUrl}?qq={Uri.EscapeDataString(address.ToString())}&show=streetInfo,tz,countryInfo,parsing&limit={limit}";
 
 			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{
@@ -70,15 +70,28 @@ namespace HERE.Api
 					{
 						addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(json);
 						addressResponse.JsonResponse = json;
+						addressResponse.Query = uri;
 					}
 					else
 					{
+						addressResponse = new()
+						{
+							Query = uri,
+							JsonResponse = json
+						};
+
 						error = JsonConvert.DeserializeObject<HereApiError>(json);
 						error.JsonResponseText = json;
 					}
 				}
 				catch (Exception ex)
 				{
+					addressResponse = new()
+					{
+						Query = uri,
+						JsonResponse = json
+					};
+
 					error = new HereApiError()
 					{
 						Cause = ex.Message,
@@ -106,7 +119,7 @@ namespace HERE.Api
 			//
 			// Make and API call.
 			//
-			string uri = $"{this.BaseUrl}?q={Uri.EscapeDataString(address)}&show=tz,countryInfo,parsing&limit={limit}";
+			string uri = $"{this.BaseUrl}?q={Uri.EscapeDataString(address)}&show=streetInfo,tz,countryInfo,parsing&limit={limit}";
 
 			using (HttpResponseMessage response = await client.GetAsync(uri))
 			{
@@ -118,15 +131,28 @@ namespace HERE.Api
 					{
 						addressResponse = JsonConvert.DeserializeObject<HereGeoCodeList>(json);
 						addressResponse.JsonResponse = json;
+						addressResponse.Query = uri;
 					}
 					else
 					{
+						addressResponse = new()
+						{
+							Query = uri,
+							JsonResponse = json
+						};
+
 						error = JsonConvert.DeserializeObject<HereApiError>(json);
 						error.JsonResponseText = json;
 					}
 				}
 				catch (Exception ex)
 				{
+					addressResponse = new()
+					{
+						Query = uri,
+						JsonResponse = json
+					};
+
 					error = new HereApiError()
 					{
 						Cause = ex.Message,

@@ -22,4 +22,10 @@
 		<ProjectReference Include="..\Here.Api\HERE.Api.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="data.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>

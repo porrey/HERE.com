@@ -1,0 +1,116 @@
+﻿{
+	"items": [
+		{
+			"title": "195 Broadway, New York, NY 10007-3100, United States",
+			"id": "here:af:streetsection:MDGj7OlskpJt1c-Opd0PCB:CgcIBCC4g-c1EAEaAzE5NQ",
+			"resultType": "houseNumber",
+			"houseNumberType": "PA",
+			"address": {
+				"label": "195 Broadway, New York, NY 10007-3100, United States",
+				"countryCode": "USA",
+				"countryName": "United States",
+				"stateCode": "NY",
+				"state": "New York",
+				"county": "New York",
+				"city": "New York",
+				"district": "Financial District",
+				"street": "Broadway",
+				"postalCode": "10007-3100",
+				"houseNumber": "195"
+			},
+			"position": {
+				"lat": 40.71071,
+				"lng": -74.00941
+			},
+			"access": [
+				{
+					"lat": 40.71064,
+					"lng": -74.00928
+				}
+			],
+			"mapView": {
+				"west": -74.0106,
+				"south": 40.70981,
+				"east": -74.00822,
+				"north": 40.71161
+			},
+			"timeZone": {
+				"name": "America/New_York",
+				"utcOffset": "-05:00"
+			},
+			"scoring": {
+				"queryScore": 1.0,
+				"fieldScore": {
+					"state": 1.0,
+					"city": 1.0,
+					"streets": [
+						1.0
+					],
+					"houseNumber": 1.0,
+					"postalCode": 1.0,
+					"unit": 1.0
+				}
+			},
+			"parsing": {
+				"state": [
+					{
+						"start": 0,
+						"end": 2,
+						"value": "NY",
+						"qq": "state"
+					}
+				],
+				"city": [
+					{
+						"start": 0,
+						"end": 8,
+						"value": "NEW YORK",
+						"qq": "city"
+					}
+				],
+				"street": [
+					{
+						"start": 4,
+						"end": 12,
+						"value": "BROADWAY",
+						"qq": "street"
+					}
+				],
+				"houseNumber": [
+					{
+						"start": 0,
+						"end": 3,
+						"value": "195",
+						"qq": "street"
+					}
+				],
+				"postalCode": [
+					{
+						"start": 0,
+						"end": 5,
+						"value": "10007",
+						"qq": "postalCode"
+					}
+				],
+				"secondaryUnits": [
+					{
+						"start": 13,
+						"end": 18,
+						"value": "FL 16",
+						"qq": "street"
+					}
+				]
+			},
+			"streetInfo": [
+				{
+					"baseName": "Broadway",
+					"language": "en"
+				}
+			],
+			"countryInfo": {
+				"alpha2": "US",
+				"alpha3": "USA"
+			}
+		}
+	]
+}

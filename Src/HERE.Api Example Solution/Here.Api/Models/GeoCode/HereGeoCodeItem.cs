@@ -20,6 +20,8 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+using System.Collections.Generic;
+using HERE.Api.Models.GeoCode;
 using Newtonsoft.Json;
 
 namespace HERE.Api
@@ -58,5 +60,8 @@ namespace HERE.Api
 
 		[JsonProperty("mapView")]
 		public HereMapView MapView { get; set; }
+
+		[JsonProperty("parsing")]
+		public Dictionary<string, IEnumerable<HereParsing>> Parsing { get; set; }
 	}
 }

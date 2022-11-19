@@ -24,6 +24,7 @@ namespace HERE.Api
 {
 	public class HereGeoCodeList
 	{
+		public string Query { get; set; }
 		public HereGeoCodeItem[] Items { get; set; }
 		public string JsonResponse { get; set; }
 	}
