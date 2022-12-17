@@ -20,7 +20,6 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System;
 using Newtonsoft.Json;
 
 namespace HERE.Api
@@ -31,7 +30,7 @@ namespace HERE.Api
 		public string Name { get; set; }
 
 		[JsonProperty("utcOffset")]
-		public TimeSpan UtcOffset { get; set; }
+		public string UtcOffset { get; set; }
 
 		public override string ToString()
 		{
