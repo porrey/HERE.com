@@ -1,17 +1,12 @@
-﻿using Diamond.Core.Workflow;
+﻿using System.CommandLine.Rendering;
+using Diamond.Core.Workflow;
 using HERE.Api;
 using Microsoft.Extensions.Logging;
-using System.CommandLine.Rendering;
 
 namespace HERE.GpsSimulator
 {
-	public class LoadCredentialsStep : TemplateWorkflowStep
+	public class LoadCredentialsStep(ILogger<LoadCredentialsStep> logger) : TemplateWorkflowStep(logger)
 	{
-		public LoadCredentialsStep(ILogger<LoadCredentialsStep> logger)
-			: base(logger)
-		{
-		}
-
 		protected override async Task<bool> OnExecuteStepAsync(IContext context)
 		{
 			bool returnValue = false;
@@ -38,16 +33,16 @@ namespace HERE.GpsSimulator
 			}
 			catch (FileNotFoundException)
 			{
-				this.Logger.LogError($"The credentials file '{file.FullName}' was not found.");
+				this.Logger.LogError("The credentials file '{file}' was not found.", file.FullName);
 				this.Render(context, $"The credentials file '{BackgroundColorSpan.Red()}{ForegroundColorSpan.White()}{file.Name}{ForegroundColorSpan.Reset()}{BackgroundColorSpan.Reset()}' was not found.");
-				this.Render(context, $""); 
+				this.Render(context, $"");
 				await this.StepFailedAsync(context, $"Credentials file not found.");
 			}
 			catch (Exception ex)
 			{
-				this.Logger.LogError(nameof(LoadCredentialsStep), ex);
+				this.Logger.LogError("Exception in {name}: '{ex}'.", nameof(LoadCredentialsStep), ex);
 				this.Render(context, $"An exception occurred while loading the credentials file '{BackgroundColorSpan.Red()}{ForegroundColorSpan.White()}{file.Name}{ForegroundColorSpan.Reset()}{BackgroundColorSpan.Reset()}'. See log for more details.");
-				this.Render(context, $""); 
+				this.Render(context, $"");
 				await this.StepFailedAsync(context, $"Exception occurred in {nameof(LoadCredentialsStep)}");
 			}
 

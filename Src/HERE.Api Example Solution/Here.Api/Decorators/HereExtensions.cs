@@ -2,7 +2,7 @@
  *
  * MIT License
  * 
- * Copyright (c) 2021-2022 Daniel Porrey
+ * Copyright (c) 2021-2024 Daniel Porrey
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -35,7 +35,7 @@ namespace HERE.Api
 		{
 			string unreserved = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
 
-			StringBuilder result = new StringBuilder();
+			StringBuilder result = new();
 
 			foreach (char symbol in value)
 			{
@@ -55,9 +55,9 @@ namespace HERE.Api
 
 		public static IDictionary<string, string> AsFiltered(this IDictionary<string, string> parameters)
 		{
-			var qry = from tbl in parameters
-					  where tbl.Key.StartsWith("oauth_")
-					  select tbl;
+			IEnumerable<KeyValuePair<string, string>> qry = from tbl in parameters
+															where tbl.Key.StartsWith("oauth_")
+															select tbl;
 
 			return new Dictionary<string, string>(qry);
 		}
