@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<Version>8.0.2</Version>
-		<FileVersion>8.0.2</FileVersion>
-		<AssemblyVersion>8.0.2</AssemblyVersion>
+		<TargetFramework>net9.0</TargetFramework>
+		<Version>9.0.0</Version>
+		<FileVersion>9.0.0</FileVersion>
+		<AssemblyVersion>9.0.0</AssemblyVersion>
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 

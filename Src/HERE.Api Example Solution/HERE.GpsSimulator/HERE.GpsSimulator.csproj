@@ -2,10 +2,10 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net8.0</TargetFramework>
-		<Version>8.0.2</Version>
-		<FileVersion>8.0.2</FileVersion>
-		<AssemblyVersion>8.0.2</AssemblyVersion>
+		<TargetFramework>net9.0</TargetFramework>
+		<Version>9.0.0</Version>
+		<FileVersion>9.0.0</FileVersion>
+		<AssemblyVersion>9.0.0</AssemblyVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<DebugType>portable</DebugType>
@@ -38,22 +38,35 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.CommandLine" Version="8.0.5" />
-		<PackageReference Include="Diamond.Core.CommandLine.Model" Version="8.0.5" />
-		<PackageReference Include="Diamond.Core.Extensions.DependencyInjection" Version="8.0.5" />
-		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.5" />
-		<PackageReference Include="Diamond.Core.Rules" Version="8.0.5" />
-		<PackageReference Include="Diamond.Core.Workflow" Version="8.0.5" />
+		<PackageReference Include="Diamond.Core.CommandLine" Version="9.0.0" />
+		<PackageReference Include="Diamond.Core.CommandLine.Model" Version="9.0.0" />
+		<PackageReference Include="Diamond.Core.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="9.0.0" />
+		<PackageReference Include="Diamond.Core.Rules" Version="9.0.0" />
+		<PackageReference Include="Diamond.Core.Rules.Abstractions" Version="9.0.0" />
+		<PackageReference Include="Diamond.Core.Workflow" Version="9.0.0" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
 		<PackageReference Include="Serilog.Settings.AppSettings" Version="3.0.0" />
-		<PackageReference Include="Serilog.Settings.Configuration" Version="8.0.2" />
+		<PackageReference Include="Serilog.Settings.Configuration" Version="8.0.4" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Here.Api\HERE.Api.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.rules.abstractions\9.0.0\contentFiles\any\net9.0\Services\Diamond.Core.Rules.Abstractions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.rules\9.0.0\contentFiles\any\net9.0\Services\Diamond.Core.Rules.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.workflow\9.0.0\contentFiles\any\net9.0\Services\Diamond.Core.Workflow.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 </Project>

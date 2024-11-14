@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<Version>8.0.2</Version>
-		<FileVersion>8.0.2</FileVersion>
-		<AssemblyVersion>8.0.2</AssemblyVersion>
+		<TargetFramework>net9.0</TargetFramework>
+		<Version>9.0.0</Version>
+		<FileVersion>9.0.0</FileVersion>
+		<AssemblyVersion>9.0.0</AssemblyVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Description>Provides OAuth 1 authorization for the HERE.com REST API.</Description>
-		<Copyright>Copyright (c) 2021-2024 Daniel Porrey</Copyright>
+		<Copyright>Copyright (c) 2021-2025 Daniel Porrey</Copyright>
 		<PackageProjectUrl>https://github.com/porrey/HERE.com</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/porrey/HERE.com.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
