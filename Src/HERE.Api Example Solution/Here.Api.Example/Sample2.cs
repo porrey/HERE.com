@@ -36,14 +36,31 @@ namespace HERE.Api.Example
 			//
 			IHereGeoCodeService hereGeoCodeService = new HereGeoCodeService();
 
-			(HereGeoCodeList result, HereApiError error) = await hereGeoCodeService.FindAddressAsync(client, new HereAddress()
+			//
+			// Create an address to search for.
+			//
+			HereAddress address = new()
 			{
-				Street = "600 E. Grand Avenue",
-				City = "Chicago",
-				StateCode = "IL",
-				PostalCode = "60611-3419"
-			});
+				Street = "1 Infinite Loop",
+				City = "Cupertino",
+				State = "CA",
+				PostalCode = "95014",
+				In = new()
+			};
 
+			//
+			// Set the country code to USA.
+			//
+			address.In.Countries.Add("USA");
+
+			//
+			// Find the address using the GeoCode service.
+			//
+			(HereGeoCodeList result, HereApiError error) = await hereGeoCodeService.FindAddressAsync(client, address);
+
+			//
+			// Check for errors and display the result.
+			//
 			if (error == null)
 			{
 				returnValue = true;

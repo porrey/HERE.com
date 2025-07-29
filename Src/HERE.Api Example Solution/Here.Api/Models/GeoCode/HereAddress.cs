@@ -21,6 +21,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace HERE.Api
@@ -57,7 +58,10 @@ namespace HERE.Api
 		[JsonProperty("countryName")]
 		public string CountryName { get; set; }
 
-		public override string ToString()
+		[JsonProperty("in")]
+		public HereIn In { get; set; }
+
+		public string BuildUrl()
 		{
 			string returnValue = null;
 
@@ -102,6 +106,26 @@ namespace HERE.Api
 			}
 
 			returnValue = string.Join(";", items);
+
+			return returnValue;
+		}
+
+		public override string ToString()
+		{
+			string returnValue = null;
+
+			//
+			// Get the URL items.
+			//
+			string[] items = new string[]
+			{
+				this.BuildUrl(),
+				this.In!=null ? this.In.ToString() : null
+			};
+
+			//
+			// Build the URL; remove any null items.
+			returnValue = $"{string.Join("&", items.Where(t => t != null))}";
 
 			return returnValue;
 		}

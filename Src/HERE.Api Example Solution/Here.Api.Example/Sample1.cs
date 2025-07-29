@@ -20,8 +20,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-using System.Diagnostics;
-using System.IO;
+using System;
 using System.Threading.Tasks;
 
 namespace HERE.Api.Example
@@ -30,26 +29,38 @@ namespace HERE.Api.Example
 	{
 		public override async Task<bool> RunAsync(HereHttpClient client)
 		{
-			using (client)
+			bool returnValue = false;
+
+			//
+			// Use the GeoCode service to find and address.
+			//
+			IHereGeoCodeService hereGeoCodeService = new HereGeoCodeService();
+
+			//
+			// Find an address using the GeoCode service.
+			//
+			(HereGeoCodeList result, HereApiError error) = await hereGeoCodeService.FindAddressAsync(client, new HereAddress()
 			{
-				//
-				// Get a sample map image.
-				//
-				byte[] imageData = await client.GetByteArrayAsync("https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/13/4400/2686/256/png8");
+				Street = "600 E. Grand Avenue",
+				City = "Chicago",
+				StateCode = "IL",
+				PostalCode = "60611-3419"
+			});
 
-				//
-				// Save the image to a temporary file.
-				//
-				string tempFile = $"{Path.GetTempFileName()}.png";
-				await File.WriteAllBytesAsync(tempFile, imageData);
-
-				//
-				// Open the image with the default system viewer.
-				//
-				Process.Start(new ProcessStartInfo(tempFile) { UseShellExecute = true });
+			// 
+			// Check for errors.
+			//
+			if (error == null)
+			{
+				returnValue = true;
+				Console.WriteLine($"Result: {result.Items[0].Title}, {result.Items[0].Id}");
+			}
+			else
+			{
+				Console.WriteLine($"Error: {error.Title}");
 			}
 
-			return true;
+			return returnValue;
 		}
 	}
 }
